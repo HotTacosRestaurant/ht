@@ -1,5 +1,12 @@
+"use client";
+
 import Link from "next/link";
 import type { Branch } from "@/app/lib/site-data";
+import {
+  trackCallClick,
+  trackDirectionsClick,
+  trackOrderClick,
+} from "@/lib/analytics";
 
 type Props = {
   branch: Branch;
@@ -32,6 +39,7 @@ export default function LocationCard({ branch }: Props) {
             target="_blank"
             rel="noreferrer"
             className="ht-btn ht-btn-primary"
+            onClick={() => trackOrderClick(branch.key)}
           >
             Order
           </a>
@@ -41,11 +49,16 @@ export default function LocationCard({ branch }: Props) {
             target="_blank"
             rel="noreferrer"
             className="ht-btn ht-btn-secondary"
+            onClick={() => trackDirectionsClick(branch.key)}
           >
             Directions
           </a>
 
-          <a href={branch.phoneHref} className="ht-btn border border-black/10">
+          <a
+            href={branch.phoneHref}
+            className="ht-btn border border-black/10"
+            onClick={() => trackCallClick(branch.key)}
+          >
             Call
           </a>
 

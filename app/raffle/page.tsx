@@ -1,4 +1,7 @@
+"use client";
+
 import SectionTitle from "@/components/SectionTitle";
+import { trackRaffleClick } from "@/lib/analytics";
 
 export default function RafflePage() {
   return (
@@ -28,7 +31,11 @@ export default function RafflePage() {
               className="rounded-xl border border-black/10 px-4 py-3 outline-none"
             />
 
-            <button type="submit" className="ht-btn ht-btn-primary">
+            <button
+              type="submit"
+              className="ht-btn ht-btn-primary"
+              onClick={trackRaffleClick}
+            >
               Enter Raffle
             </button>
           </form>

@@ -1,37 +1,44 @@
+"use client";
+
 import Link from "next/link";
+import { useLanguage } from "@/components/LanguageProvider";
 
 export default function QuickActions() {
+  const { messages } = useLanguage();
+
   return (
     <section className="ht-section">
       <div className="ht-shell">
         <div className="ht-grid-3">
           <Link href="/menu" className="ht-card p-5">
             <div className="text-sm font-extrabold uppercase tracking-[0.12em] text-[#d81920]">
-              Menu
+              {messages.quick.menuTitle}
             </div>
-            <div className="mt-2 text-xl font-black">See both branch menus</div>
+            <div className="mt-2 text-xl font-black">{messages.quick.menuTitle}</div>
             <p className="mt-2 text-sm text-neutral-600">
-              Leamington and Windsor have different menus.
+              {messages.quick.menuBody}
             </p>
           </Link>
 
           <Link href="/locations" className="ht-card p-5">
             <div className="text-sm font-extrabold uppercase tracking-[0.12em] text-[#d81920]">
-              Locations
+              {messages.quick.locationsTitle}
             </div>
-            <div className="mt-2 text-xl font-black">Call, map, order</div>
+            <div className="mt-2 text-xl font-black">
+              {messages.quick.locationsTitle}
+            </div>
             <p className="mt-2 text-sm text-neutral-600">
-              Fast actions for people on the go.
+              {messages.quick.locationsBody}
             </p>
           </Link>
 
           <Link href="/raffle" className="ht-card p-5">
             <div className="text-sm font-extrabold uppercase tracking-[0.12em] text-[#d81920]">
-              Raffle
+              {messages.quick.raffleTitle}
             </div>
-            <div className="mt-2 text-xl font-black">Win something real</div>
+            <div className="mt-2 text-xl font-black">{messages.quick.raffleTitle}</div>
             <p className="mt-2 text-sm text-neutral-600">
-              Good for customers who respond to direct benefits.
+              {messages.quick.raffleBody}
             </p>
           </Link>
         </div>

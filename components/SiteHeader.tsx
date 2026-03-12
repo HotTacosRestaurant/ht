@@ -1,10 +1,15 @@
+"use client";
+
 import Link from "next/link";
 import { SOCIALS } from "@/app/lib/site-data";
+import { useLanguage } from "@/components/LanguageProvider";
 
 export default function SiteHeader() {
+  const { messages, toggleLocale } = useLanguage();
+
   return (
     <header className="sticky top-0 z-40 border-b border-black/10 bg-[#f4d000]">
-      <div className="ht-shell flex min-h-[72px] items-center justify-between gap-4">
+      <div className="ht-shell flex min-h-72px items-center justify-between gap-4">
         <Link href="/" className="flex items-center gap-3">
           <div className="rounded-full bg-[#d81920] px-3 py-2 text-sm font-black text-white">
             HOT
@@ -18,12 +23,12 @@ export default function SiteHeader() {
         </Link>
 
         <nav className="hidden items-center gap-5 text-sm font-semibold md:flex">
-          <Link href="/">Home</Link>
-          <Link href="/menu">Menu</Link>
-          <Link href="/locations">Locations</Link>
-          <Link href="/reviews">Reviews</Link>
-          <Link href="/raffle">Raffle</Link>
-          <Link href="/catering">Catering</Link>
+          <Link href="/">{messages.nav.home}</Link>
+          <Link href="/menu">{messages.nav.menu}</Link>
+          <Link href="/locations">{messages.nav.locations}</Link>
+          <Link href="/reviews">{messages.nav.reviews}</Link>
+          <Link href="/raffle">{messages.nav.raffle}</Link>
+          <Link href="/catering">{messages.nav.catering}</Link>
           <a href={SOCIALS.facebook} target="_blank" rel="noreferrer">
             Facebook
           </a>
@@ -32,9 +37,19 @@ export default function SiteHeader() {
           </a>
         </nav>
 
-        <Link href="/locations" className="ht-btn ht-btn-dark text-sm">
-          Order Now
-        </Link>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={toggleLocale}
+            className="rounded-full border border-black/15 bg-white px-3 py-2 text-xs font-bold"
+          >
+            {messages.nav.language}
+          </button>
+
+          <Link href="/locations" className="ht-btn ht-btn-dark text-sm">
+            {messages.nav.orderNow}
+          </Link>
+        </div>
       </div>
     </header>
   );
