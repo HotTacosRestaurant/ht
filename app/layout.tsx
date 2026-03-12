@@ -11,6 +11,11 @@ export const metadata: Metadata = {
   title: "Hot Tacos Restaurant",
   description:
     "Comida mexicana auténtica en Leamington y Windsor. Ordena en línea, visita nuestras sucursales y disfruta fiesta en cada mordida.",
+  icons: {
+    icon: "/favicon.png",
+    shortcut: "/favicon.png",
+    apple: "/favicon.png",
+  },
 };
 
 export default function RootLayout({
