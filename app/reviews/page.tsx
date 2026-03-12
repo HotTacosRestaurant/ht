@@ -9,7 +9,7 @@ type SubmitStatus = "idle" | "loading" | "success" | "error";
 
 export default function ReviewsPage() {
   const { locale } = useLanguage();
-
+  const { messages } = useLanguage();
   const [branchKey, setBranchKey] = useState<ReviewBranchKey>("leamington");
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
@@ -115,21 +115,21 @@ export default function ReviewsPage() {
           <article className="ht-card p-6">
             <div className="text-[#d81920]">★★★★★</div>
             <p className="mt-3 text-sm text-neutral-700">
-              Great flavour, generous portions, and fast service.
+              {messages.reviewsPage.card1}
             </p>
           </article>
 
           <article className="ht-card p-6">
             <div className="text-[#d81920]">★★★★★</div>
             <p className="mt-3 text-sm text-neutral-700">
-              Tastes like home. Perfect spot for authentic Mexican food.
+              {messages.reviewsPage.card2}
             </p>
           </article>
 
           <article className="ht-card p-6">
             <div className="text-[#d81920]">★★★★★</div>
             <p className="mt-3 text-sm text-neutral-700">
-              Good value, strong portions, and a festive atmosphere.
+              {messages.reviewsPage.card3}
             </p>
           </article>
         </div>

@@ -1,20 +1,22 @@
+"use client";
+
 import SectionTitle from "@/components/SectionTitle";
+import { useLanguage } from "@/components/LanguageProvider";
 
 export default function CateringPage() {
+  const { messages } = useLanguage();
+
   return (
     <section className="ht-section">
       <div className="ht-shell max-w-4xl">
         <SectionTitle
-          eyebrow="Catering"
-          title="Food for groups, parties, and events"
-          description="Simple page for now. Enough to open a secondary sales path without making the site heavy."
+          eyebrow={messages.cateringPage.eyebrow}
+          title={messages.cateringPage.title}
+          description={messages.cateringPage.description}
         />
 
         <div className="ht-card p-6 md:p-8">
-          <p className="text-neutral-700">
-            Ask about catering for birthdays, family gatherings, work events,
-            and celebrations.
-          </p>
+          <p className="text-neutral-700">{messages.cateringPage.body}</p>
 
           <div className="mt-6 flex flex-wrap gap-3">
             <a href="/locations/leamington" className="ht-btn ht-btn-primary">

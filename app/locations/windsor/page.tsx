@@ -1,16 +1,20 @@
+"use client";
+
 import SectionTitle from "@/components/SectionTitle";
 import { BRANCHES, FEATURED_ITEMS, SOCIALS } from "@/lib/site-data";
+import { useLanguage } from "@/components/LanguageProvider";
 
 export default function WindsorPage() {
   const branch = BRANCHES.windsor;
+  const { messages } = useLanguage();
 
   return (
     <section className="ht-section">
       <div className="ht-shell">
         <SectionTitle
-          eyebrow="Windsor"
+          eyebrow={messages.branchPage.windsorEyebrow}
           title={branch.name}
-          description="Fast path for customers who already know they want this branch."
+          description={messages.branchPage.description}
         />
 
         <div className="ht-grid-2">
@@ -35,7 +39,7 @@ export default function WindsorPage() {
                 rel="noreferrer"
                 className="ht-btn ht-btn-primary"
               >
-                Order Online
+                {messages.branchPage.orderOnline}
               </a>
               <a
                 href={branch.mapsUrl}
@@ -43,19 +47,19 @@ export default function WindsorPage() {
                 rel="noreferrer"
                 className="ht-btn ht-btn-secondary"
               >
-                Directions
+                {messages.branchPage.directions}
               </a>
               <a href={branch.phoneHref} className="ht-btn border border-black/10">
-                Call
+                {messages.branchPage.call}
               </a>
               <a href="/menu" className="ht-btn border border-black/10">
-                View Menu
+                {messages.branchPage.viewMenu}
               </a>
             </div>
 
             <div className="mt-6 border-t border-black/10 pt-6">
               <div className="text-sm font-extrabold uppercase tracking-[0.12em] text-[#d81920]">
-                Social
+                {messages.branchPage.social}
               </div>
               <div className="mt-3 flex gap-3">
                 <a
@@ -64,7 +68,7 @@ export default function WindsorPage() {
                   rel="noreferrer"
                   className="ht-btn border border-black/10"
                 >
-                  Facebook
+                  {messages.nav.facebook}
                 </a>
                 <a
                   href={SOCIALS.instagram}
@@ -72,7 +76,7 @@ export default function WindsorPage() {
                   rel="noreferrer"
                   className="ht-btn border border-black/10"
                 >
-                  Instagram
+                  {messages.nav.instagram}
                 </a>
               </div>
             </div>
@@ -81,7 +85,7 @@ export default function WindsorPage() {
 
         <div className="mt-8 ht-card p-6">
           <div className="text-sm font-extrabold uppercase tracking-[0.12em] text-[#d81920]">
-            Windsor Menu Highlights
+            {messages.branchPage.menuHighlightsWindsor}
           </div>
           <div className="mt-4 grid gap-2 text-sm text-neutral-700 md:grid-cols-2">
             {FEATURED_ITEMS.windsor.map((item) => (

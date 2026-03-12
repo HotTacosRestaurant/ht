@@ -7,12 +7,15 @@ import {
   trackDirectionsClick,
   trackOrderClick,
 } from "@/lib/analytics";
+import { useLanguage } from "@/components/LanguageProvider";
 
 type Props = {
   branch: Branch;
 };
 
 export default function LocationCard({ branch }: Props) {
+  const { messages } = useLanguage();
+
   return (
     <article className="ht-card overflow-hidden">
       <div className="aspect-16/10 bg-neutral-200">
@@ -41,7 +44,7 @@ export default function LocationCard({ branch }: Props) {
             className="ht-btn ht-btn-primary"
             onClick={() => trackOrderClick(branch.key)}
           >
-            Order
+            {messages.locationCard.order}
           </a>
 
           <a
@@ -51,7 +54,7 @@ export default function LocationCard({ branch }: Props) {
             className="ht-btn ht-btn-secondary"
             onClick={() => trackDirectionsClick(branch.key)}
           >
-            Directions
+            {messages.locationCard.directions}
           </a>
 
           <a
@@ -59,14 +62,14 @@ export default function LocationCard({ branch }: Props) {
             className="ht-btn border border-black/10"
             onClick={() => trackCallClick(branch.key)}
           >
-            Call
+            {messages.locationCard.call}
           </a>
 
           <Link
             href={`/locations/${branch.key}`}
             className="ht-btn border border-black/10"
           >
-            Details
+            {messages.locationCard.details}
           </Link>
         </div>
       </div>

@@ -1,10 +1,15 @@
+"use client";
+
 import Hero from "@/components/Hero";
 import QuickActions from "@/components/QuickActions";
 import SectionTitle from "@/components/SectionTitle";
 import LocationCard from "@/components/LocationCard";
 import { BRANCHES, FEATURED_ITEMS } from "@/lib/site-data";
+import { useLanguage } from "@/components/LanguageProvider";
 
 export default function HomePage() {
+  const { messages } = useLanguage();
+
   return (
     <>
       <Hero />
@@ -14,9 +19,9 @@ export default function HomePage() {
       <section className="ht-section">
         <div className="ht-shell">
           <SectionTitle
-            eyebrow="Locations"
-            title="Choose your branch fast"
-            description="Most visitors already know what they want: food, price, location, and a quick way to order. Make that obvious."
+            eyebrow={messages.home.locationsEyebrow}
+            title={messages.home.locationsTitle}
+            description={messages.home.locationsDescription}
           />
 
           <div className="ht-grid-2">
@@ -29,9 +34,9 @@ export default function HomePage() {
       <section className="ht-section bg-white">
         <div className="ht-shell">
           <SectionTitle
-            eyebrow="Menus"
-            title="Different menu in each branch"
-            description="Keep that distinction visible. Do not force users to guess which menu belongs to which location."
+            eyebrow={messages.home.menusEyebrow}
+            title={messages.home.menusTitle}
+            description={messages.home.menusDescription}
           />
 
           <div className="ht-grid-2">
@@ -39,7 +44,9 @@ export default function HomePage() {
               <div className="text-sm font-extrabold uppercase tracking-[0.12em] text-[#d81920]">
                 Leamington
               </div>
-              <h3 className="mt-2 text-2xl font-black">Popular items</h3>
+              <h3 className="mt-2 text-2xl font-black">
+                {messages.home.popularItems}
+              </h3>
               <ul className="mt-4 grid gap-2 text-sm text-neutral-700">
                 {FEATURED_ITEMS.leamington.map((item) => (
                   <li key={item}>• {item}</li>
@@ -52,10 +59,10 @@ export default function HomePage() {
                   rel="noreferrer"
                   className="ht-btn ht-btn-primary"
                 >
-                  Order Leamington
+                  {messages.home.orderLeamington}
                 </a>
                 <a href="/menu" className="ht-btn border border-black/10">
-                  View Menu
+                  {messages.home.viewMenu}
                 </a>
               </div>
             </div>
@@ -64,7 +71,9 @@ export default function HomePage() {
               <div className="text-sm font-extrabold uppercase tracking-[0.12em] text-[#d81920]">
                 Windsor
               </div>
-              <h3 className="mt-2 text-2xl font-black">Popular items</h3>
+              <h3 className="mt-2 text-2xl font-black">
+                {messages.home.popularItems}
+              </h3>
               <ul className="mt-4 grid gap-2 text-sm text-neutral-700">
                 {FEATURED_ITEMS.windsor.map((item) => (
                   <li key={item}>• {item}</li>
@@ -77,10 +86,10 @@ export default function HomePage() {
                   rel="noreferrer"
                   className="ht-btn ht-btn-primary"
                 >
-                  Order Windsor
+                  {messages.home.orderWindsor}
                 </a>
                 <a href="/menu" className="ht-btn border border-black/10">
-                  View Menu
+                  {messages.home.viewMenu}
                 </a>
               </div>
             </div>
@@ -92,22 +101,21 @@ export default function HomePage() {
         <div className="ht-shell">
           <div className="ht-card bg-[#111111] p-8 text-white">
             <div className="text-sm font-extrabold uppercase tracking-[0.14em] text-[#f4d000]">
-              Raffle + reviews
+              {messages.home.blockEyebrow}
             </div>
             <h2 className="mt-3 text-3xl font-black">
-              Keep the website useful, not noisy
+              {messages.home.blockTitle}
             </h2>
             <p className="mt-3 max-w-2xl text-white/80">
-              Reviews build trust. Raffles give people a reason to share their
-              data. Both matter, but neither should get in the way of ordering.
+              {messages.home.blockDescription}
             </p>
 
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
               <a href="/reviews" className="ht-btn ht-btn-secondary">
-                See Reviews
+                {messages.home.seeReviews}
               </a>
               <a href="/raffle" className="ht-btn ht-btn-primary">
-                Enter Raffle
+                {messages.home.enterRaffle}
               </a>
             </div>
           </div>

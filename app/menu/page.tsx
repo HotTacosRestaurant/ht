@@ -1,14 +1,19 @@
+"use client";
+
 import SectionTitle from "@/components/SectionTitle";
 import { BRANCHES, FEATURED_ITEMS } from "@/lib/site-data";
+import { useLanguage } from "@/components/LanguageProvider";
 
 export default function MenuPage() {
+  const { messages } = useLanguage();
+
   return (
     <section className="ht-section">
       <div className="ht-shell">
         <SectionTitle
-          eyebrow="Menu"
-          title="Different menu by branch"
-          description="Do not mix them. Keep each menu tied to its branch so users do not get confused."
+          eyebrow={messages.menuPage.eyebrow}
+          title={messages.menuPage.title}
+          description={messages.menuPage.description}
         />
 
         <div className="ht-grid-2">
@@ -36,10 +41,13 @@ export default function MenuPage() {
                 rel="noreferrer"
                 className="ht-btn ht-btn-primary"
               >
-                Full Menu / Order
+                {messages.menuPage.fullMenuOrder}
               </a>
-              <a href="/locations/leamington" className="ht-btn border border-black/10">
-                Branch Details
+              <a
+                href="/locations/leamington"
+                className="ht-btn border border-black/10"
+              >
+                {messages.menuPage.branchDetails}
               </a>
             </div>
           </div>
@@ -66,10 +74,13 @@ export default function MenuPage() {
                 rel="noreferrer"
                 className="ht-btn ht-btn-primary"
               >
-                Full Menu / Order
+                {messages.menuPage.fullMenuOrder}
               </a>
-              <a href="/locations/windsor" className="ht-btn border border-black/10">
-                Branch Details
+              <a
+                href="/locations/windsor"
+                className="ht-btn border border-black/10"
+              >
+                {messages.menuPage.branchDetails}
               </a>
             </div>
           </div>
