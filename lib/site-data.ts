@@ -31,7 +31,7 @@ export const BRANCHES: Record<BranchKey, Branch> = {
       "https://www.google.com/maps/dir//Hot+Tacos+Mexican+Restaurant/@42.0529949,-82.6816491,12z/data=!4m8!4m7!1m0!1m5!1m1!1s0x883ac1874678d4cf:0xd04e2ab656c80fa2!2m2!1d-82.5992483!2d42.0530244?entry=ttu",
     orderUrl: "https://order.tbdine.com/pickup/28824/menu",
     imageUrl:
-      "https://firebasestorage.googleapis.com/v0/b/mihottacoswebapp.appspot.com/o/Leamington-Hot-Tacos.jpg?alt=media",
+      "https://firebasestorage.googleapis.com/v0/b/hottacosleamingtonwebapp.firebasestorage.app/o/ht-site%2FScreenshot1.jpg?alt=media&token=f427f5d2-9123-4cfd-a88a-270848f355c3",
   },
   windsor: {
     key: "windsor",
@@ -45,7 +45,7 @@ export const BRANCHES: Record<BranchKey, Branch> = {
       "https://www.google.com/maps/dir//hot+tacos+windsor+ontario/data=!4m6!4m5!1m1!4e2!1m2!1m1!1s0x883b2dd18c2079f3:0x7c98cd6cc1c7cbea?sa=X&ved=1t:3061&ictx=111",
     orderUrl: "https://order.tbdine.com/pickup/51513/menu",
     imageUrl:
-      "https://firebasestorage.googleapis.com/v0/b/mihottacoswebapp.appspot.com/o/Windsor-Hot-Tacos.jpg?alt=media",
+      "https://firebasestorage.googleapis.com/v0/b/hottacosleamingtonwebapp.firebasestorage.app/o/ht-site%2FHot%20Tacos%20Windsor.jpg?alt=media&token=7e02635b-93e1-4d7a-8293-5e55060f7c08",
   },
 };
 
