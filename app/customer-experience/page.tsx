@@ -2,19 +2,23 @@
 
 import { useMemo, useState } from "react";
 import SectionTitle from "@/components/SectionTitle";
-import { createReviewInboxEntry, type ReviewBranchKey } from "@/lib/reviews";
+import {
+  createCustomerExperienceEntry,
+  type ExperienceBranchKey,
+} from "@/lib/customer-experience";
 import { useLanguage } from "@/components/LanguageProvider";
 
 type SubmitStatus = "idle" | "loading" | "success" | "error";
+type VisitType = "dine_in" | "takeout" | "delivery" | "other";
 
-export default function ReviewsPage() {
+export default function CustomerExperiencePage() {
   const { locale } = useLanguage();
 
-  const [branchKey, setBranchKey] = useState<ReviewBranchKey>("leamington");
+  const [branchKey, setBranchKey] = useState<ExperienceBranchKey>("leamington");
+  const [visitType, setVisitType] = useState<VisitType>("dine_in");
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-  const [rating, setRating] = useState(5);
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState<SubmitStatus>("idle");
   const [errorMessage, setErrorMessage] = useState("");
@@ -22,42 +26,50 @@ export default function ReviewsPage() {
   const labels = useMemo(() => {
     if (locale === "en") {
       return {
-        eyebrow: "Reviews",
-        title: "Tell us about your experience",
+        eyebrow: "Customer Experience",
+        title: "Tell us what happened",
         description:
-          "Visible reviews build trust. New submissions go to a separate V2 inbox in Firestore.",
+          "This is for service feedback, issues, compliments, or suggestions. It writes into a separate V2 Firestore collection.",
         fullName: "Full name",
         phone: "Phone (optional)",
         email: "Email (optional)",
         branch: "Branch",
-        rating: "Rating",
-        message: "Your review",
-        submit: "Send review",
+        visitType: "Visit type",
+        message: "Message",
+        dineIn: "Dine in",
+        takeout: "Takeout",
+        delivery: "Delivery",
+        other: "Other",
+        submit: "Send message",
         loading: "Sending...",
-        success: "Thanks. Your review was submitted.",
-        error: "Could not save your review. Please try again.",
+        success: "Thanks. Your message was submitted.",
+        error: "Could not save your message. Please try again.",
         invalidName: "Please enter your name.",
-        invalidMessage: "Please enter your review.",
+        invalidMessage: "Please write a message.",
       };
     }
 
     return {
-      eyebrow: "Reseñas",
-      title: "Cuéntanos tu experiencia",
+      eyebrow: "Experiencia del Cliente",
+      title: "Cuéntanos qué pasó",
       description:
-        "Las reseñas visibles generan confianza. Los nuevos envíos van a un inbox V2 separado en Firestore.",
+        "Esto es para feedback de servicio, problemas, felicitaciones o sugerencias. Escribe en una colección V2 separada en Firestore.",
       fullName: "Nombre completo",
       phone: "Teléfono (opcional)",
       email: "Email (opcional)",
       branch: "Sucursal",
-      rating: "Calificación",
-      message: "Tu reseña",
-      submit: "Enviar reseña",
+      visitType: "Tipo de visita",
+      message: "Mensaje",
+      dineIn: "Comer en sitio",
+      takeout: "Para llevar",
+      delivery: "Entrega",
+      other: "Otro",
+      submit: "Enviar mensaje",
       loading: "Enviando...",
-      success: "Gracias. Tu reseña fue enviada.",
-      error: "No se pudo guardar tu reseña. Intenta de nuevo.",
+      success: "Gracias. Tu mensaje fue enviado.",
+      error: "No se pudo guardar tu mensaje. Intenta de nuevo.",
       invalidName: "Ingresa tu nombre.",
-      invalidMessage: "Escribe tu reseña.",
+      invalidMessage: "Escribe un mensaje.",
     };
   }, [locale]);
 
@@ -78,23 +90,23 @@ export default function ReviewsPage() {
     try {
       setStatus("loading");
 
-      await createReviewInboxEntry({
+      await createCustomerExperienceEntry({
         fullName,
         phone,
         email,
         branchKey,
-        rating,
+        visitType,
         message,
         locale,
       });
 
       setStatus("success");
+      setBranchKey("leamington");
+      setVisitType("dine_in");
       setFullName("");
       setPhone("");
       setEmail("");
-      setRating(5);
       setMessage("");
-      setBranchKey("leamington");
     } catch (error) {
       console.error(error);
       setStatus("error");
@@ -104,38 +116,39 @@ export default function ReviewsPage() {
 
   return (
     <section className="ht-section">
-      <div className="ht-shell">
+      <div className="ht-shell max-w-3xl">
         <SectionTitle
           eyebrow={labels.eyebrow}
           title={labels.title}
           description={labels.description}
         />
 
-        <div className="ht-grid-3">
-          <article className="ht-card p-6">
-            <div className="text-[#d81920]">★★★★★</div>
-            <p className="mt-3 text-sm text-neutral-700">
-              Great flavour, generous portions, and fast service.
-            </p>
-          </article>
-
-          <article className="ht-card p-6">
-            <div className="text-[#d81920]">★★★★★</div>
-            <p className="mt-3 text-sm text-neutral-700">
-              Tastes like home. Perfect spot for authentic Mexican food.
-            </p>
-          </article>
-
-          <article className="ht-card p-6">
-            <div className="text-[#d81920]">★★★★★</div>
-            <p className="mt-3 text-sm text-neutral-700">
-              Good value, strong portions, and a festive atmosphere.
-            </p>
-          </article>
-        </div>
-
-        <div className="mt-10 ht-card p-6 md:p-8">
+        <div className="ht-card p-6 md:p-8">
           <form className="grid gap-4" onSubmit={handleSubmit}>
+            <div className="grid gap-4 md:grid-cols-2">
+              <select
+                value={branchKey}
+                onChange={(e) =>
+                  setBranchKey(e.target.value as ExperienceBranchKey)
+                }
+                className="rounded-xl border border-black/10 px-4 py-3 outline-none"
+              >
+                <option value="leamington">Leamington</option>
+                <option value="windsor">Windsor</option>
+              </select>
+
+              <select
+                value={visitType}
+                onChange={(e) => setVisitType(e.target.value as VisitType)}
+                className="rounded-xl border border-black/10 px-4 py-3 outline-none"
+              >
+                <option value="dine_in">{labels.dineIn}</option>
+                <option value="takeout">{labels.takeout}</option>
+                <option value="delivery">{labels.delivery}</option>
+                <option value="other">{labels.other}</option>
+              </select>
+            </div>
+
             <div className="grid gap-4 md:grid-cols-2">
               <input
                 type="text"
@@ -145,17 +158,6 @@ export default function ReviewsPage() {
                 className="rounded-xl border border-black/10 px-4 py-3 outline-none"
               />
 
-              <select
-                value={branchKey}
-                onChange={(e) => setBranchKey(e.target.value as ReviewBranchKey)}
-                className="rounded-xl border border-black/10 px-4 py-3 outline-none"
-              >
-                <option value="leamington">Leamington</option>
-                <option value="windsor">Windsor</option>
-              </select>
-            </div>
-
-            <div className="grid gap-4 md:grid-cols-2">
               <input
                 type="tel"
                 placeholder={labels.phone}
@@ -163,36 +165,21 @@ export default function ReviewsPage() {
                 onChange={(e) => setPhone(e.target.value)}
                 className="rounded-xl border border-black/10 px-4 py-3 outline-none"
               />
-
-              <input
-                type="email"
-                placeholder={labels.email}
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="rounded-xl border border-black/10 px-4 py-3 outline-none"
-              />
             </div>
 
-            <label className="grid gap-2">
-              <span className="text-sm font-semibold">{labels.rating}</span>
-              <select
-                value={rating}
-                onChange={(e) => setRating(Number(e.target.value))}
-                className="rounded-xl border border-black/10 px-4 py-3 outline-none"
-              >
-                <option value={5}>5</option>
-                <option value={4}>4</option>
-                <option value={3}>3</option>
-                <option value={2}>2</option>
-                <option value={1}>1</option>
-              </select>
-            </label>
+            <input
+              type="email"
+              placeholder={labels.email}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="rounded-xl border border-black/10 px-4 py-3 outline-none"
+            />
 
             <textarea
               placeholder={labels.message}
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              rows={5}
+              rows={6}
               className="rounded-xl border border-black/10 px-4 py-3 outline-none"
             />
 

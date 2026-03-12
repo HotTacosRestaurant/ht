@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { SOCIALS } from "@/app/lib/site-data";
+import { SOCIALS } from "@/lib/site-data";
 import { useLanguage } from "@/components/LanguageProvider";
 
 export default function SiteHeader() {
@@ -29,6 +29,7 @@ export default function SiteHeader() {
           <Link href="/reviews">{messages.nav.reviews}</Link>
           <Link href="/raffle">{messages.nav.raffle}</Link>
           <Link href="/catering">{messages.nav.catering}</Link>
+          <Link href="/customer-experience">Experience</Link>
           <a href={SOCIALS.facebook} target="_blank" rel="noreferrer">
             Facebook
           </a>

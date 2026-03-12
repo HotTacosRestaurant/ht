@@ -1,4 +1,4 @@
-import { SOCIALS } from "@/app/lib/site-data";
+import { SOCIALS } from "@/lib/site-data";
 
 export default function SiteFooter() {
   return (

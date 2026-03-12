@@ -1,5 +1,5 @@
 import SectionTitle from "@/components/SectionTitle";
-import { BRANCHES, FEATURED_ITEMS, SOCIALS } from "@/app/lib/site-data";
+import { BRANCHES, FEATURED_ITEMS, SOCIALS } from "@/lib/site-data";
 
 export default function WindsorPage() {
   const branch = BRANCHES.windsor;

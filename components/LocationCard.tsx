@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import type { Branch } from "@/app/lib/site-data";
+import type { Branch } from "@/lib/site-data";
 import {
   trackCallClick,
   trackDirectionsClick,

@@ -2,7 +2,7 @@ import Hero from "@/components/Hero";
 import QuickActions from "@/components/QuickActions";
 import SectionTitle from "@/components/SectionTitle";
 import LocationCard from "@/components/LocationCard";
-import { BRANCHES, FEATURED_ITEMS } from "@/app/lib/site-data";
+import { BRANCHES, FEATURED_ITEMS } from "@/lib/site-data";
 
 export default function HomePage() {
   return (

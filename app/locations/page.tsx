@@ -1,6 +1,6 @@
 import SectionTitle from "@/components/SectionTitle";
 import LocationCard from "@/components/LocationCard";
-import { BRANCHES } from "@/app/lib/site-data";
+import { BRANCHES } from "@/lib/site-data";
 
 export default function LocationsPage() {
   return (

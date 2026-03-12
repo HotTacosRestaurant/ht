@@ -1,5 +1,5 @@
 import SectionTitle from "@/components/SectionTitle";
-import { BRANCHES, FEATURED_ITEMS } from "@/app/lib/site-data";
+import { BRANCHES, FEATURED_ITEMS } from "@/lib/site-data";
 
 export default function MenuPage() {
   return (

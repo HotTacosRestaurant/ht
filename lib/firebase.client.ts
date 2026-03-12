@@ -1,5 +1,6 @@
 import { getApps, initializeApp } from "firebase/app";
 import { getAnalytics, isSupported } from "firebase/analytics";
+import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
@@ -15,6 +16,7 @@ const firebaseConfig = {
 export const firebaseApp =
   getApps().length > 0 ? getApps()[0] : initializeApp(firebaseConfig);
 
+export const db = getFirestore(firebaseApp);
 export const storage = getStorage(firebaseApp);
 
 export async function initFirebaseAnalytics() {
