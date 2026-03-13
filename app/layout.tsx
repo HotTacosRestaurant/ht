@@ -1,10 +1,13 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import Script from "next/script";
+import { Suspense } from "react";
 import "./globals.css";
 import SiteHeader from "@/components/SiteHeader";
 import MobileOrderBar from "@/components/MobileOrderBar";
 import SiteFooter from "@/components/SiteFooter";
 import LanguageProvider from "@/components/LanguageProvider";
+import AnalyticsRouteTracker from "@/components/AnalyticsRouteTracker";
+import PwaRegister from "@/components/PwaRegister";
 import { GA_ID, META_PIXEL_ID } from "@/lib/analytics";
 
 export const metadata: Metadata = {
@@ -12,10 +15,19 @@ export const metadata: Metadata = {
   description:
     "Comida mexicana auténtica en Leamington y Windsor. Ordena en línea, visita nuestras sucursales y disfruta fiesta en cada mordida.",
   icons: {
-    icon: "/favicon.png",
-    shortcut: "/favicon.png",
-    apple: "/favicon.png",
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/icons/apple-touch-icon.png",
   },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Hot Tacos",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#f4d000",
 };
 
 export default function RootLayout({
@@ -25,6 +37,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
+      <head>
+        <link rel="manifest" href="/manifest.webmanifest" />
+        <meta name="theme-color" content="#f4d000" />
+        <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+      </head>
       <body>
         {GA_ID ? (
           <>
@@ -35,11 +52,11 @@ export default function RootLayout({
             <Script id="ga4-init" strategy="afterInteractive">
               {`
                 window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
+                function gtag(){window.dataLayer.push(arguments);}
                 window.gtag = gtag;
                 gtag('js', new Date());
                 gtag('config', '${GA_ID}', {
-                  page_path: window.location.pathname,
+                  send_page_view: false
                 });
               `}
             </Script>
@@ -59,7 +76,6 @@ export default function RootLayout({
                 s.parentNode.insertBefore(t,s)}(window, document,'script',
                 'https://connect.facebook.net/en_US/fbevents.js');
                 fbq('init', '${META_PIXEL_ID}');
-                fbq('track', 'PageView');
               `}
             </Script>
             <noscript>
@@ -75,6 +91,10 @@ export default function RootLayout({
         ) : null}
 
         <LanguageProvider>
+          <Suspense fallback={null}>
+            <AnalyticsRouteTracker />
+          </Suspense>
+          <PwaRegister />
           <SiteHeader />
           <main>{children}</main>
           <SiteFooter />
