@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import SectionTitle from "@/components/SectionTitle";
 import { createRaffleEntry, type RaffleBranchKey } from "@/lib/raffles";
-import { trackRaffleClick } from "@/lib/analytics";
+import { trackRaffleSubmit } from "@/lib/analytics";
 import { useLanguage } from "@/components/LanguageProvider";
 
 type SubmitStatus = "idle" | "loading" | "success" | "error";
@@ -96,7 +96,7 @@ export default function RafflePage() {
         locale,
       });
 
-      trackRaffleClick();
+      trackRaffleSubmit(branchKey, locale);
 
       setStatus("success");
       setFullName("");

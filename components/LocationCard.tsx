@@ -42,7 +42,7 @@ export default function LocationCard({ branch }: Props) {
             target="_blank"
             rel="noreferrer"
             className="ht-btn ht-btn-primary"
-            onClick={() => trackOrderClick(branch.key)}
+            onClick={() => trackOrderClick(branch.key, "location_card")}
           >
             {messages.locationCard.order}
           </a>
@@ -52,7 +52,7 @@ export default function LocationCard({ branch }: Props) {
             target="_blank"
             rel="noreferrer"
             className="ht-btn ht-btn-secondary"
-            onClick={() => trackDirectionsClick(branch.key)}
+            onClick={() => trackDirectionsClick(branch.key, "location_card")}
           >
             {messages.locationCard.directions}
           </a>
@@ -60,7 +60,7 @@ export default function LocationCard({ branch }: Props) {
           <a
             href={branch.phoneHref}
             className="ht-btn border border-black/10"
-            onClick={() => trackCallClick(branch.key)}
+            onClick={() => trackCallClick(branch.key, "location_card")}
           >
             {messages.locationCard.call}
           </a>

@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import SectionTitle from "@/components/SectionTitle";
 import { createReviewInboxEntry, type ReviewBranchKey } from "@/lib/reviews";
 import { useLanguage } from "@/components/LanguageProvider";
+import { trackReviewSubmit } from "@/lib/analytics";
 
 type SubmitStatus = "idle" | "loading" | "success" | "error";
 
@@ -87,7 +88,7 @@ export default function ReviewsPage() {
         message,
         locale,
       });
-
+      trackReviewSubmit(branchKey, rating, locale);
       setStatus("success");
       setFullName("");
       setPhone("");

@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { SOCIALS } from "@/lib/site-data";
 import { useLanguage } from "@/components/LanguageProvider";
+import { trackEvent } from "@/lib/analytics";
 
 export default function SiteHeader() {
   const { messages, toggleLocale } = useLanguage();
@@ -52,13 +53,28 @@ export default function SiteHeader() {
         <div className="flex items-center gap-2">
           <button
             type="button"
-            onClick={toggleLocale}
+            onClick={() => {
+              trackEvent("locale_toggle", {
+                cta_location: "header",
+              });
+              toggleLocale();
+            }}
             className="rounded-full border border-black/15 bg-white px-3 py-2 text-xs font-bold"
           >
             {messages.nav.language}
           </button>
 
-          <Link href="/locations" className="ht-btn ht-btn-dark text-sm">
+          <Link
+            href="/locations"
+            className="ht-btn ht-btn-dark text-sm"
+            onClick={() =>
+              trackEvent("nav_click", {
+                cta_location: "header",
+                cta_label: "order_now",
+                destination: "/locations",
+              })
+            }
+          >
             {messages.nav.orderNow}
           </Link>
         </div>

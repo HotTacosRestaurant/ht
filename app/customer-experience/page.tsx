@@ -7,6 +7,7 @@ import {
   type ExperienceBranchKey,
 } from "@/lib/customer-experience";
 import { useLanguage } from "@/components/LanguageProvider";
+import { trackExperienceSubmit } from "@/lib/analytics";
 
 type SubmitStatus = "idle" | "loading" | "success" | "error";
 type VisitType = "dine_in" | "takeout" | "delivery" | "other";
@@ -99,7 +100,7 @@ export default function CustomerExperiencePage() {
         message,
         locale,
       });
-
+      trackExperienceSubmit(branchKey, visitType, locale);
       setStatus("success");
       setBranchKey("leamington");
       setVisitType("dine_in");

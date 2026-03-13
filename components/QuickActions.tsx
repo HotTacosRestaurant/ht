@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useLanguage } from "@/components/LanguageProvider";
+import { trackEvent } from "@/lib/analytics";
 
 export default function QuickActions() {
   const { messages } = useLanguage();
@@ -10,7 +11,13 @@ export default function QuickActions() {
     <section className="ht-section">
       <div className="ht-shell">
         <div className="ht-grid-3">
-          <Link href="/menu" className="ht-card p-5">
+          <Link href="/menu" className="ht-card p-5"
+            onClick={() =>
+              trackEvent("quick_action_click", {
+                cta_label: "menu",
+                destination: "/menu",
+              })
+            }>
             <div className="text-sm font-extrabold uppercase tracking-[0.12em] text-[#d81920]">
               {messages.quick.menuTitle}
             </div>
@@ -20,7 +27,13 @@ export default function QuickActions() {
             </p>
           </Link>
 
-          <Link href="/locations" className="ht-card p-5">
+          <Link href="/locations" className="ht-card p-5"
+          onClick={() =>
+            trackEvent("quick_action_click", {
+              cta_label: "locations",
+              destination: "/locations",
+            })
+          }>
             <div className="text-sm font-extrabold uppercase tracking-[0.12em] text-[#d81920]">
               {messages.quick.locationsTitle}
             </div>
@@ -32,7 +45,13 @@ export default function QuickActions() {
             </p>
           </Link>
 
-          <Link href="/raffle" className="ht-card p-5">
+          <Link href="/raffle" className="ht-card p-5"
+            onClick={() =>
+              trackEvent("quick_action_click", {
+                cta_label: "raffle",
+                destination: "/raffle",
+              })
+            }>
             <div className="text-sm font-extrabold uppercase tracking-[0.12em] text-[#d81920]">
               {messages.quick.raffleTitle}
             </div>

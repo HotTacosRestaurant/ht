@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useLanguage } from "@/components/LanguageProvider";
+import { trackEvent } from "@/lib/analytics";
 
 export default function Hero() {
   const { messages } = useLanguage();
@@ -25,17 +26,43 @@ export default function Hero() {
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            <Link href="/locations/leamington" className="ht-btn ht-btn-primary">
+            <Link
+              href="/locations/leamington"
+              className="ht-btn ht-btn-primary"
+              onClick={() =>
+                trackEvent("hero_cta_click", {
+                  branch: "leamington",
+                  cta_label: "order_leamington",
+                  destination: "/locations/leamington",
+                })
+              }
+            >
               {messages.hero.orderLeamington}
             </Link>
 
-            <Link href="/locations/windsor" className="ht-btn ht-btn-secondary">
+            <Link
+              href="/locations/windsor"
+              className="ht-btn ht-btn-secondary"
+              onClick={() =>
+                trackEvent("hero_cta_click", {
+                  branch: "windsor",
+                  cta_label: "order_windsor",
+                  destination: "/locations/windsor",
+                })
+              }
+            >
               {messages.hero.orderWindsor}
             </Link>
 
             <Link
               href="/menu"
               className="ht-btn border border-white/30 bg-white/10 text-white"
+              onClick={() =>
+                trackEvent("hero_cta_click", {
+                  cta_label: "view_menu",
+                  destination: "/menu",
+                })
+              }
             >
               {messages.hero.viewMenus}
             </Link>
