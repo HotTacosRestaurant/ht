@@ -36,20 +36,17 @@ const en = {
   home: {
     locationsEyebrow: "Locations",
     locationsTitle: "Choose your branch fast",
-    locationsDescription:
-      "Most visitors already know what they want: food, price, location, and a quick way to order. Make that obvious.",
+    locationsDescription: "",
     menusEyebrow: "Menus",
     menusTitle: "Different menu in each branch",
-    menusDescription:
-      "Keep that distinction visible. Do not force users to guess which menu belongs to which location.",
+    menusDescription: "",
     popularItems: "Popular items",
     orderLeamington: "Order Leamington",
     orderWindsor: "Order Windsor",
     viewMenu: "View Menu",
     blockEyebrow: "Raffle + reviews",
     blockTitle: "Keep the website useful, not noisy",
-    blockDescription:
-      "Reviews build trust. Raffles give people a reason to share their data. Both matter, but neither should get in the way of ordering.",
+    blockDescription: "",
     seeReviews: "See Reviews",
     enterRaffle: "Enter Raffle",
   },
@@ -57,8 +54,7 @@ const en = {
   menuPage: {
     eyebrow: "Menu",
     title: "Different menu by branch",
-    description:
-      "Do not mix them. Keep each menu tied to its branch so users do not get confused.",
+    description: "",
     fullMenuOrder: "Full Menu / Order",
     branchDetails: "Branch Details",
   },
@@ -73,8 +69,7 @@ const en = {
   branchPage: {
     leamingtonEyebrow: "Leamington",
     windsorEyebrow: "Windsor",
-    description:
-      "Fast path for customers who already know they want this branch.",
+    description: "",
     orderOnline: "Order Online",
     directions: "Directions",
     call: "Call",
@@ -87,8 +82,7 @@ const en = {
   cateringPage: {
     eyebrow: "Catering",
     title: "Food for groups, parties, and events",
-    description:
-      "Simple page for now. Enough to open a secondary sales path without making the site heavy.",
+    description: "",
     body:
       "Ask about catering for birthdays, family gatherings, work events, and celebrations.",
   },

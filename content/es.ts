@@ -36,20 +36,17 @@ const es = {
   home: {
     locationsEyebrow: "Sucursales",
     locationsTitle: "Elige tu sucursal rápido",
-    locationsDescription:
-      "La mayoría ya sabe lo que quiere: comida, precio, ubicación y una forma rápida de ordenar. Haz eso obvio.",
+    locationsDescription: "",
     menusEyebrow: "Menús",
-    menusTitle: "Cada sucursal tiene su propio menú",
-    menusDescription:
-      "Haz visible esa diferencia. No obligues al usuario a adivinar qué menú corresponde a cada ubicación.",
+    menusTitle: "Conoce nuestros menús",
+    menusDescription: "",
     popularItems: "Platillos populares",
     orderLeamington: "Ordenar Leamington",
     orderWindsor: "Ordenar Windsor",
     viewMenu: "Ver menú",
     blockEyebrow: "Rifa + reseñas",
-    blockTitle: "Que el sitio sea útil, no ruidoso",
-    blockDescription:
-      "Las reseñas generan confianza. Las rifas dan una razón para compartir datos. Ambas importan, pero ninguna debe estorbar el pedido.",
+    blockTitle: "",
+    blockDescription: "",
     seeReviews: "Ver reseñas",
     enterRaffle: "Entrar a la rifa",
   },
@@ -57,8 +54,7 @@ const es = {
   menuPage: {
     eyebrow: "Menú",
     title: "Menú diferente por sucursal",
-    description:
-      "No los mezcles. Mantén cada menú ligado a su sucursal para que el usuario no se confunda.",
+    description: "",
     fullMenuOrder: "Menú completo / Ordenar",
     branchDetails: "Detalles de sucursal",
   },
@@ -66,15 +62,13 @@ const es = {
   locationsPage: {
     eyebrow: "Sucursales",
     title: "Leamington y Windsor",
-    description:
-      "Elige tu sucursal más cercana y toma el camino más corto para ordenar, llamar o abrir el mapa.",
+    description: "Elige tu sucursal más cercana y toma el camino más corto para ordenar, llamar o abrir el mapa.",
   },
 
   branchPage: {
     leamingtonEyebrow: "Leamington",
     windsorEyebrow: "Windsor",
-    description:
-      "Ruta rápida para clientes que ya saben que quieren esta sucursal.",
+    description: "",
     orderOnline: "Ordenar en línea",
     directions: "Cómo llegar",
     call: "Llamar",
@@ -87,10 +81,8 @@ const es = {
   cateringPage: {
     eyebrow: "Catering",
     title: "Comida para grupos, fiestas y eventos",
-    description:
-      "Página simple por ahora. Suficiente para abrir una ruta secundaria de ventas sin hacer pesado el sitio.",
-    body:
-      "Pregunta por catering para cumpleaños, reuniones familiares, eventos de trabajo y celebraciones.",
+    description: "",
+    body: "Pregunta por catering para cumpleaños, reuniones familiares, eventos de trabajo y celebraciones.",
   },
 
   footer: {
