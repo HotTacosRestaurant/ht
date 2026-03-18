@@ -37,6 +37,32 @@ export default function LocationCard({ branch }: Props) {
         <p className="mt-1 text-sm font-semibold">{branch.phoneDisplay}</p>
 
         <div className="mt-5 grid grid-cols-2 gap-3">
+
+          {/* ✅ BOTÓN ARREGLADO */}
+          <a
+            href={
+              branch.key === "windsor"
+                ? "https://app.tableup.com/r/6729/home"
+                : branch.key === "leamington"
+                ? "https://app.tableup.com/r/6740/home"
+                : "#"
+            }
+            target="_blank"
+            rel="noreferrer"
+            style={{
+              color: "#ffffff",
+              backgroundColor: "#000000",
+              display: "block",
+              textAlign: "center",
+              padding: "12px",
+              borderRadius: "12px",
+              fontWeight: 600,
+              fontSize: "14px",
+            }}
+          >
+            Join Loyalty Program
+          </a>
+
           <a
             href={branch.orderUrl}
             target="_blank"
