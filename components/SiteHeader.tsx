@@ -11,7 +11,7 @@ export default function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-black/10 bg-[#f4d000]">
-      <div className="ht-shell flex min-h-[72px] items-center justify-between gap-2 py-2 md:min-h-[110px] md:gap-3">
+      <div className="ht-shell flex min-h-[72px] items-center justify-between gap-1 px-2 py-2 md:min-h-[110px] md:gap-3">
         <Link href="/" className="flex min-w-0 items-center gap-2 md:gap-3">
           <div className="flex shrink-0 items-center justify-center overflow-visible">
             <Image
@@ -50,7 +50,7 @@ export default function SiteHeader() {
           </a>
         </nav>
 
-        <div className="flex shrink-0 items-center gap-2">
+        <div className="flex shrink-0 items-center gap-2 max-w-full">
           <button
             type="button"
             onClick={() => {

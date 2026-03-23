@@ -130,3 +130,7 @@ img {
     height: 0;
   }
 }
+
+body {
+  overflow-x: hidden;
+}

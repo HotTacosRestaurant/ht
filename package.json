@@ -3,16 +3,25 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3010 -H 0.0.0.0",
     "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
+    "start": "next start -p 3010",
+    "lint": "eslint",
+
+    "build:native": "cross-env BUILD_TARGET=native next build",
+    "native:build": "cross-env BUILD_TARGET=native next build",
+    "native:sync": "npx cap sync",
+    "android": "npm run build:native && npx cap sync android && npx cap open android",
+    "android:open": "npx cap open android",
+    "android:run": "npx cap run android",
+    "android:build": "npm run native:build && npm run native:sync && npx cap build android"    
   },
   "dependencies": {
     "@capacitor/android": "^8.2.0",
     "@capacitor/cli": "^7.6.0",
     "@capacitor/core": "^8.2.0",
     "@capacitor/ios": "^8.2.0",
+    "cross-env": "^10.1.0",
     "firebase": "^12.10.0",
     "next": "16.1.6",
     "react": "19.2.3",
@@ -20,6 +29,7 @@
   },
   "devDependencies": {
     "@capacitor/assets": "^3.0.5",
+    "@playwright/test": "^1.58.2",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
