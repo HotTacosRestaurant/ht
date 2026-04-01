@@ -54,7 +54,7 @@ export default function CustomerExperiencePage() {
       eyebrow: "Experiencia del Cliente",
       title: "Cuéntanos qué pasó",
       description:
-        "Esto es para feedback de servicio, problemas, felicitaciones o sugerencias. Escribe en una colección V2 separada en Firestore.",
+        "Esto es para feedback de servicio, problemas, felicitaciones o sugerencias.",
       fullName: "Nombre completo",
       phone: "Teléfono (opcional)",
       email: "Email (opcional)",

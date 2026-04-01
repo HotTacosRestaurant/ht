@@ -46,7 +46,7 @@ export default function ReviewsPage() {
       eyebrow: "Reseñas",
       title: "Cuéntanos tu experiencia",
       description:
-        "Las reseñas visibles generan confianza. Los nuevos envíos van a un inbox V2 separado en Firestore.",
+        "Las reseñas visibles generan confianza.",
       fullName: "Nombre completo",
       phone: "Teléfono (opcional)",
       email: "Email (opcional)",

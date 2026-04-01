@@ -47,7 +47,7 @@ export default function RafflePage() {
       eyebrow: "Rifa",
       title: "Participa en la rifa",
       description:
-        "Directa, clara y separada del legacy para poder evolucionarla bien.",
+        "",
       branch: "Sucursal",
       leamington: "Leamington",
       windsor: "Windsor",
