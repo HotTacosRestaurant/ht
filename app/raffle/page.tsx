@@ -25,7 +25,7 @@ export default function RafflePage() {
         eyebrow: "Raffle",
         title: "Enter the raffle",
         description:
-          "Simple, direct, and built for real customer capture without mixing with legacy data.",
+          "",
         branch: "Branch",
         leamington: "Leamington",
         windsor: "Windsor",

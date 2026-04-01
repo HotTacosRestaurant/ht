@@ -30,7 +30,7 @@ export default function CustomerExperiencePage() {
         eyebrow: "Customer Experience",
         title: "Tell us what happened",
         description:
-          "This is for service feedback, issues, compliments, or suggestions. It writes into a separate V2 Firestore collection.",
+          "This is for service feedback, issues, compliments, or suggestions.",
         fullName: "Full name",
         phone: "Phone (optional)",
         email: "Email (optional)",

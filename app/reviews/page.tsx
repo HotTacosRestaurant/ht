@@ -26,7 +26,7 @@ export default function ReviewsPage() {
         eyebrow: "Reviews",
         title: "Tell us about your experience",
         description:
-          "Visible reviews build trust. New submissions go to a separate V2 inbox in Firestore.",
+          "Visible reviews build trust.",
         fullName: "Full name",
         phone: "Phone (optional)",
         email: "Email (optional)",
