@@ -59,12 +59,12 @@ export const FEATURED_ITEMS = {
     "Aguas Frescas",
   ],
   windsor: [
-    "Sopa Azteca",
-    "Carne Asada",
-    "Chilaquiles",
-    "Pulpo al Gusto",
+    "Huarache Tricolor",
     "Enchiladas Tricolor",
-    "Tacos al Pastor",
+    "Quesabirrias",
+    "Papas a la Hot Tacos",
+    "Orden de Sopes",
+    "Carne Asada",
   ],
 };
 
