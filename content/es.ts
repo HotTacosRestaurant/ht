@@ -71,8 +71,8 @@ const es = {
     description: "",
     orderOnline: "Ordenar en línea",
     directions: "Cómo llegar",
-    call: "Llamar",
-    viewMenu: "Ver menú",
+    call: "📞 Llamar",
+    viewMenu: "Ver menú 🍽️",
     social: "Redes sociales",
     menuHighlightsLeamington: "Destacados del menú de Leamington",
     menuHighlightsWindsor: "Destacados del menú de Windsor",
@@ -94,13 +94,13 @@ const es = {
 
   mobileBar: {
     orderOnline: "Ordenar",
-    viewMenu: "Menú",
+    viewMenu: "🍽️ Menú",
   },
 
   locationCard: {
     order: "Ordenar",
     directions: "Cómo llegar",
-    call: "Llamar",
+    call: "📞 Llamar",
     details: "Detalles",
   },
 
