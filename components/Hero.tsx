@@ -9,8 +9,19 @@ export default function Hero() {
   const { messages } = useLanguage();
 
   return (
-    <section className="ht-hero-bg">
-      <div className="ht-shell grid min-h-[520px] items-center gap-8 py-12 text-white md:min-h-[560px] md:grid-cols-[1.05fr_0.95fr] md:gap-10 md:py-20">
+    <section className="ht-hero-bg relative overflow-hidden">
+      <div className="absolute inset-0">
+        <Image
+          src="https://firebasestorage.googleapis.com/v0/b/hottacosleamingtonwebapp.firebasestorage.app/o/ht-site%2FHotTacosMenus.jpg?alt=media&token=e2d6a450-cac6-4d1e-8ee7-9cb825e82e5b"
+          alt="Hot Tacos background"
+          fill
+          priority
+          className="object-cover object-center opacity-20"
+        />
+        <div className="absolute inset-0 bg-[#6f665c]/07" />
+      </div>
+
+      <div className="relative z-10 ht-shell grid min-h-[520px] items-center gap-8 py-12 text-white md:min-h-[560px] md:grid-cols-[1.05fr_0.95fr] md:gap-10 md:py-20">
         <div className="max-w-3xl">
           <span className="ht-pill">{messages.hero.eyebrow}</span>
 
