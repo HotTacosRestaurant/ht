@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useLanguage } from "@/components/LanguageProvider";
 import { trackEvent } from "@/lib/analytics";
+import { FaUtensils } from "react-icons/fa";
 
 export default function MobileOrderBar() {
   const { messages } = useLanguage();
@@ -24,14 +25,9 @@ export default function MobileOrderBar() {
         </Link>
         <Link
           href="/menu"
-          className="ht-btn ht-btn-secondary flex-1"
-          onClick={() =>
-            trackEvent("mobile_order_bar_click", {
-              cta_label: "view_menu",
-              destination: "/menu",
-            })
-          }
+          className="ht-btn ht-btn-secondary flex-1 flex items-center justify-center gap-2"
         >
+          <FaUtensils />
           {messages.mobileBar.viewMenu}
         </Link>
       </div>

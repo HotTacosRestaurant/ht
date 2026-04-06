@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.ico",
     shortcut: "/favicon.ico",
-    apple: "/icons/apple-touch-icon.png",
+    apple: "/apple-touch-icon-v2.png",
   },
   appleWebApp: {
     capable: true,
@@ -43,7 +43,7 @@ export default function RootLayout({
       <head>
         <link rel="manifest" href="/manifest.webmanifest" />
         <meta name="theme-color" content="#f4d000" />
-        <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon-v2.png" />
       </head>
       <body>
         {GA_ID ? (
