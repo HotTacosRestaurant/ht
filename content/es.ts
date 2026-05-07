@@ -16,7 +16,7 @@ const es = {
   hero: {
     eyebrow: "Comida Mexicana Auténtica",
     title: "HOT TACOS",
-    subtitle: "Fiesta en cada mordida",
+    subtitle: "Fiesta en cada mordisco",
     body: "Comida mexicana auténtica, ambiente festivo y ordena rápido desde tu sucursal.",
     orderLeamington: "Ordenar Leamington",
     orderWindsor: "Ordenar Windsor",

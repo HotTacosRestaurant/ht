@@ -13,7 +13,7 @@ import { GA_ID, META_PIXEL_ID } from "@/lib/analytics";
 export const metadata: Metadata = {
   title: "Hot Tacos Restaurant",
   description:
-    "Comida mexicana auténtica en Leamington y Windsor. Ordena en línea, visita nuestras sucursales y disfruta fiesta en cada mordida.",
+    "Comida mexicana auténtica en Leamington y Windsor. Ordena en línea, visita nuestras sucursales y disfruta fiesta en cada mordisco.",
   icons: {
     icon: "/favicon.ico",
     shortcut: "/favicon.ico",
