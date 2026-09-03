@@ -6,7 +6,45 @@ import { useLanguage } from "@/components/LanguageProvider";
 
 export default function LeamingtonPage() {
   const branch = BRANCHES.leamington;
-  const { messages } = useLanguage();
+  const { messages, locale } = useLanguage();
+
+  const links = {
+    order:
+      "https://order.toasttab.com/online/hot-tacos-leamington",
+    rewardsSignup:
+      "https://www.toasttab.com/hot-tacos-leamington/rewardsSignup",
+    rewards:
+      "https://www.toasttab.com/hot-tacos-leamington/rewards",
+    giftCardPurchase:
+      "https://order.toasttab.com/egiftcards/hot-tacos-leamington",
+    giftCardBalance:
+      "https://www.toasttab.com/hot-tacos-leamington/findcard",
+    feedback:
+      "https://www.toasttab.com/feedback/6940942c-314d-4049-9dec-e5d40a296787",
+    instagram:
+      "https://www.instagram.com/hottacosrestaurant/",
+  };
+
+  const labels =
+    locale === "es"
+      ? {
+          rewardsTitle: "Rewards y Gift Cards",
+          joinRewards: "Únete a Rewards",
+          checkRewards: "Consultar mis puntos",
+          buyGiftCard: "Comprar Gift Card",
+          checkGiftCardBalance: "Consultar saldo",
+          feedbackTitle: "Tu experiencia",
+          feedback: "Compartir comentarios",
+        }
+      : {
+          rewardsTitle: "Rewards & Gift Cards",
+          joinRewards: "Join Rewards",
+          checkRewards: "Check My Rewards",
+          buyGiftCard: "Buy a Gift Card",
+          checkGiftCardBalance: "Check Gift Card Balance",
+          feedbackTitle: "Your Experience",
+          feedback: "Share Feedback",
+        };
 
   return (
     <section className="ht-section">
@@ -34,13 +72,14 @@ export default function LeamingtonPage() {
 
             <div className="mt-5 grid grid-cols-2 gap-3">
               <a
-                href={branch.orderUrl}
+                href={links.order}
                 target="_blank"
                 rel="noreferrer"
                 className="ht-btn ht-btn-primary"
               >
                 {messages.branchPage.orderOnline}
               </a>
+
               <a
                 href={branch.mapsUrl}
                 target="_blank"
@@ -49,18 +88,88 @@ export default function LeamingtonPage() {
               >
                 {messages.branchPage.directions}
               </a>
-              <a href={branch.phoneHref} className="ht-btn border border-black/10">
+
+              <a
+                href={branch.phoneHref}
+                className="ht-btn border border-black/10"
+              >
                 {messages.branchPage.call}
               </a>
-              <a href="/menu" className="ht-btn border border-black/10">
+
+              <a
+                href="/menu"
+                className="ht-btn border border-black/10"
+              >
                 {messages.branchPage.viewMenu}
               </a>
             </div>
 
             <div className="mt-6 border-t border-black/10 pt-6">
               <div className="text-sm font-extrabold uppercase tracking-[0.12em] text-[#d81920]">
+                {labels.rewardsTitle}
+              </div>
+
+              <div className="mt-3 grid grid-cols-2 gap-3">
+                <a
+                  href={links.rewardsSignup}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="ht-btn border border-black/10"
+                >
+                  {labels.joinRewards}
+                </a>
+
+                <a
+                  href={links.rewards}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="ht-btn border border-black/10"
+                >
+                  {labels.checkRewards}
+                </a>
+
+                <a
+                  href={links.giftCardPurchase}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="ht-btn border border-black/10"
+                >
+                  {labels.buyGiftCard}
+                </a>
+
+                <a
+                  href={links.giftCardBalance}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="ht-btn border border-black/10"
+                >
+                  {labels.checkGiftCardBalance}
+                </a>
+              </div>
+            </div>
+
+            <div className="mt-6 border-t border-black/10 pt-6">
+              <div className="text-sm font-extrabold uppercase tracking-[0.12em] text-[#d81920]">
+                {labels.feedbackTitle}
+              </div>
+
+              <div className="mt-3">
+                <a
+                  href={links.feedback}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="ht-btn border border-black/10"
+                >
+                  {labels.feedback}
+                </a>
+              </div>
+            </div>
+
+            <div className="mt-6 border-t border-black/10 pt-6">
+              <div className="text-sm font-extrabold uppercase tracking-[0.12em] text-[#d81920]">
                 {messages.branchPage.social}
               </div>
+
               <div className="mt-3 flex gap-3">
                 <a
                   href={SOCIALS.facebook}
@@ -70,8 +179,9 @@ export default function LeamingtonPage() {
                 >
                   {messages.nav.facebook}
                 </a>
+
                 <a
-                  href={SOCIALS.instagram}
+                  href={links.instagram}
                   target="_blank"
                   rel="noreferrer"
                   className="ht-btn border border-black/10"
@@ -87,6 +197,7 @@ export default function LeamingtonPage() {
           <div className="text-sm font-extrabold uppercase tracking-[0.12em] text-[#d81920]">
             {messages.branchPage.menuHighlightsLeamington}
           </div>
+
           <div className="mt-4 grid gap-2 text-sm text-neutral-700 md:grid-cols-2">
             {FEATURED_ITEMS.leamington.map((item) => (
               <div key={item}>• {item}</div>

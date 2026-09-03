@@ -40,13 +40,7 @@ export default function LocationCard({ branch }: Props) {
 
           {/* ✅ BOTÓN ARREGLADO */}
           <a
-            href={
-              branch.key === "windsor"
-                ? "https://app.tableup.com/r/6729/home"
-                : branch.key === "leamington"
-                ? "https://app.tableup.com/r/6740/home"
-                : "#"
-            }
+            href={branch.rewardsSignupUrl}
             target="_blank"
             rel="noreferrer"
             style={{
@@ -60,7 +54,7 @@ export default function LocationCard({ branch }: Props) {
               fontSize: "14px",
             }}
           >
-            Join Loyalty Program
+            Join Rewards
           </a>
 
           <a

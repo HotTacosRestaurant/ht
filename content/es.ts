@@ -109,6 +109,14 @@ const es = {
     card2: "Sabe a casa. Un lugar perfecto para comida mexicana auténtica.",
     card3: "Buen valor, buenas porciones y ambiente festivo.",
   },
+
+  rewards: {
+    title: "Rewards y Gift Cards",
+    join: "Únete a Rewards",
+    checkRewards: "Consultar mis puntos",
+    buyGiftCard: "Comprar Gift Card",
+    checkGiftCardBalance: "Consultar saldo",
+  },
 };
 
 export default es;

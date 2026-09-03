@@ -111,6 +111,14 @@ const en = {
     card2: "Tastes like home. Perfect spot for authentic Mexican food.",
     card3: "Good value, strong portions, and a festive atmosphere.",
   },
+
+  rewards: {
+    title: "Rewards & Gift Cards",
+    join: "Join Rewards",
+    checkRewards: "Check My Rewards",
+    buyGiftCard: "Buy a Gift Card",
+    checkGiftCardBalance: "Check Gift Card Balance",
+  },
 };
 
 export default en;
