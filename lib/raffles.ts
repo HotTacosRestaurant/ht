@@ -10,6 +10,7 @@ export type CreateRaffleEntryInput = {
   phone: string;
   email?: string;
   acceptedTerms: boolean;
+  marketingConsent: boolean;
   branchKey: RaffleBranchKey;
   locale: RaffleLocale;
 };
@@ -20,6 +21,9 @@ export async function createRaffleEntry(input: CreateRaffleEntryInput) {
     phone: input.phone.trim(),
     email: input.email?.trim() || null,
     acceptedTerms: input.acceptedTerms,
+    marketingConsent: input.marketingConsent,
+    marketingConsentVersion: "2026-09",
+    marketingConsentAt: input.marketingConsent ? serverTimestamp() : null,
     branchKey: input.branchKey,
     locale: input.locale,
     source: "website",

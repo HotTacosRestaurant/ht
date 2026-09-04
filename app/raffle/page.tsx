@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import SectionTitle from "@/components/SectionTitle";
 import { createRaffleEntry, type RaffleBranchKey } from "@/lib/raffles";
 import { trackRaffleSubmit } from "@/lib/analytics";
@@ -16,8 +16,18 @@ export default function RafflePage() {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const [marketingConsent, setMarketingConsent] = useState(false);
   const [status, setStatus] = useState<SubmitStatus>("idle");
   const [errorMessage, setErrorMessage] = useState("");
+
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const branch = params.get("branch");
+    if (branch === "leamington" || branch === "windsor") {
+      setBranchKey(branch as RaffleBranchKey);
+    }
+  }, []);
 
   const labels = useMemo(() => {
     if (locale === "en") {
@@ -33,6 +43,7 @@ export default function RafflePage() {
         phone: "Phone number",
         email: "Email (optional)",
         terms: "I accept the terms and conditions",
+        marketing: "Yes, I would like to receive Hot Tacos promotions and offers by email or text. I can unsubscribe at any time.",
         submit: "Enter raffle",
         loading: "Sending...",
         success: "Done. Your entry was registered.",
@@ -55,6 +66,7 @@ export default function RafflePage() {
       phone: "Teléfono",
       email: "Email (opcional)",
       terms: "Acepto términos y condiciones",
+      marketing: "Sí, quiero recibir promociones y ofertas de Hot Tacos por email o SMS. Puedo darme de baja en cualquier momento.",
       submit: "Participar",
       loading: "Enviando...",
       success: "Listo. Tu registro fue guardado.",
@@ -92,6 +104,7 @@ export default function RafflePage() {
         phone,
         email,
         acceptedTerms,
+        marketingConsent,
         branchKey,
         locale,
       });
@@ -103,6 +116,7 @@ export default function RafflePage() {
       setPhone("");
       setEmail("");
       setAcceptedTerms(false);
+      setMarketingConsent(false);
       setBranchKey("leamington");
     } catch (error) {
       console.error(error);
@@ -165,6 +179,16 @@ export default function RafflePage() {
                 onChange={(e) => setAcceptedTerms(e.target.checked)}
               />
               <span>{labels.terms}</span>
+            </label>
+
+            <label className="flex items-start gap-3 text-sm">
+              <input
+                type="checkbox"
+                checked={marketingConsent}
+                onChange={(e) => setMarketingConsent(e.target.checked)}
+                className="mt-0.5"
+              />
+              <span>{labels.marketing}</span>
             </label>
 
             <button

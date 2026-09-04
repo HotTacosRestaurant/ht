@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import SectionTitle from "@/components/SectionTitle";
 import {
   createCustomerExperienceEntry,
@@ -23,6 +23,15 @@ export default function CustomerExperiencePage() {
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState<SubmitStatus>("idle");
   const [errorMessage, setErrorMessage] = useState("");
+
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const branch = params.get("branch");
+    if (branch === "leamington" || branch === "windsor") {
+      setBranchKey(branch as ExperienceBranchKey);
+    }
+  }, []);
 
   const labels = useMemo(() => {
     if (locale === "en") {

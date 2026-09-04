@@ -8,7 +8,21 @@ const nextConfig: NextConfig = {
         output: "export",
         trailingSlash: true,
       }
-    : {}),
+    : {
+        async headers() {
+          return [
+            {
+              source: "/engage/:path*",
+              headers: [
+                {
+                  key: "Cache-Control",
+                  value: "no-store, no-cache, must-revalidate, proxy-revalidate",
+                },
+              ],
+            },
+          ];
+        },
+      }),
 
   images: {
     unoptimized: isNativeBuild,

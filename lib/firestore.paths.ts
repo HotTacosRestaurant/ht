@@ -8,6 +8,7 @@ export const FS_PATHS = {
   raffleEntries: "ht_v2_raffle_entries",
   customerExperience: "ht_v2_customer_experience",
   cateringLeads: "ht_v2_catering_leads",
+  businessOpportunities: "ht_v2_business_opportunities",
   assets: "ht_v2_assets",
 } as const;
 

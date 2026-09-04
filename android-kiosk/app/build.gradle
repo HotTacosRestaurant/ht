@@ -1,0 +1,52 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.hottacos.engage'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'com.hottacos.engage'
+        minSdk 26
+        targetSdk 35
+        versionCode 1
+        versionName '1.0.0'
+
+        buildConfigField 'long', 'SESSION_IDLE_MS', '180000L'
+    }
+
+    flavorDimensions 'location'
+    productFlavors {
+        windsor {
+            dimension 'location'
+            applicationIdSuffix '.windsor'
+            versionNameSuffix '-windsor'
+            buildConfigField 'String', 'HOME_URL', '"https://hottacosrestaurant.com/engage/windsor"'
+            buildConfigField 'String', 'STATION_NAME', '"Windsor"'
+            resValue 'string', 'app_name', 'Hot Tacos Engage - Windsor'
+        }
+        leamington {
+            dimension 'location'
+            applicationIdSuffix '.leamington'
+            versionNameSuffix '-leamington'
+            buildConfigField 'String', 'HOME_URL', '"https://hottacosrestaurant.com/engage/leamington"'
+            buildConfigField 'String', 'STATION_NAME', '"Leamington"'
+            resValue 'string', 'app_name', 'Hot Tacos Engage - Leamington'
+        }
+    }
+
+    buildTypes {
+        debug {
+            debuggable true
+        }
+        release {
+            minifyEnabled false
+            shrinkResources false
+        }
+    }
+
+    buildFeatures {
+        buildConfig true
+    }
+}
