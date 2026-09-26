@@ -153,7 +153,7 @@ export default async function ManagementPage({ params, searchParams }: Props) {
                   <Link
                     key={campaign.id}
                     href={`/hottacosmanagement/${managementKey}?edit=${campaign.id}`}
-                    className="block p-5 hover:bg-black/[0.03]"
+                    className="block p-5 hover:bg-black/3"
                   >
                     <div className="flex items-center justify-between gap-3">
                       <div>
