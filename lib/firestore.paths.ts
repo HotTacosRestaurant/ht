@@ -10,6 +10,9 @@ export const FS_PATHS = {
   cateringLeads: "ht_v2_catering_leads",
   businessOpportunities: "ht_v2_business_opportunities",
   assets: "ht_v2_assets",
+  promoCampaigns: "ht_v2_promo_campaigns",
+  promoClaims: "ht_v2_promo_claims",
+  promoClaimKeys: "ht_v2_promo_claim_keys",
 } as const;
 
 export const STORAGE_PATHS = {
