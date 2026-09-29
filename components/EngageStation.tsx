@@ -8,7 +8,7 @@ import { trackEvent } from "@/lib/analytics";
 import styles from "./EngageStation.module.css";
 import {
   FaArrowRight,
-  FaBullhorn,
+  // FaBullhorn,
   FaCalendarCheck,
   FaCommentDots,
   FaGift,
@@ -33,8 +33,10 @@ type Action = {
   title: string;
   subtitle: string;
   href: string;
-  icon: React.ReactNode;
+  icon?: React.ReactNode;
+  image?: string;
   tone: Tone;
+  emailHandoff?: boolean;
 };
 
 type Promo = {
@@ -48,6 +50,11 @@ export default function EngageStation({ branchKey }: { branchKey: BranchKey }) {
   const branch = BRANCHES[branchKey];
   const [attractMode, setAttractMode] = useState(true);
   const [promoIndex, setPromoIndex] = useState(0);
+  const [handoffAction, setHandoffAction] = useState<Action | null>(null);
+  const [handoffEmail, setHandoffEmail] = useState("");
+  const [handoffStatus, setHandoffStatus] =
+    useState<"idle" | "loading" | "success" | "error">("idle");
+  const [handoffError, setHandoffError] = useState("");
   const idleRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const copy = useMemo(
@@ -72,14 +79,27 @@ export default function EngageStation({ branchKey }: { branchKey: BranchKey }) {
             sponsor: "Sponsorship",
             sponsorSub: "Tell us about your project",
             vendor: "Invite us as a Vendor",
-            vendorSub: "Bring Hot Tacos to your event",
-            advertise: "Advertise with Us",
-            advertiseSub: "Reach our local community",
+            vendorSub: "Festivals, markets & community events",
+            // advertise: "Advertise with Us",
+            // advertiseSub: "Reach our local community",
+            foodTruck: "Book Our Food Truck",
+            foodTruckSub: "Weddings, graduations, sports & private events",
             attractTitle: "More than great tacos.",
             attractSubtitle:
               "Rewards, gift cards, catering, community opportunities and more — all in one place.",
             media: "Hot Tacos highlights",
             footer: "Hot Tacos · Party in Every Bite",
+            continueTitle: "Continue on your phone",
+            continueText:
+              "Enter your email and we will send you a secure link to continue.",
+            emailPlaceholder: "Your email",
+            sendLink: "Send me the link",
+            sendingLink: "Sending...",
+            sentLink: "Link sent. Check your inbox.",
+            continueHere: "Continue here",
+            cancel: "Cancel",
+            invalidEmail: "Enter a valid email address.",
+            sendError: "We could not send the link. Please try again.",
             promos: [
               { kicker: "Hot Tacos Rewards", title: "Eat. Earn. Enjoy.", body: "Join Rewards and make every visit count." },
               { kicker: "Gift Cards", title: "Give a little more Hot Tacos.", body: "Buy an eGift Card or check an existing balance." },
@@ -106,14 +126,27 @@ export default function EngageStation({ branchKey }: { branchKey: BranchKey }) {
             sponsor: "Sponsorship",
             sponsorSub: "Cuéntanos sobre tu proyecto",
             vendor: "Invítanos como Vendor",
-            vendorSub: "Lleva Hot Tacos a tu evento",
-            advertise: "Anúnciate con nosotros",
-            advertiseSub: "Llega a nuestra comunidad local",
+            vendorSub: "Festivales, mercados y eventos comunitarios",
+            // advertise: "Anúnciate con nosotros",
+            // advertiseSub: "Llega a nuestra comunidad local",
+            foodTruck: "Contrata nuestro Food Truck",
+            foodTruckSub: "Bodas, graduaciones, deportes y eventos privados",
             attractTitle: "Mucho más que buenos tacos.",
             attractSubtitle:
               "Rewards, gift cards, catering, oportunidades con la comunidad y más, todo en un mismo lugar.",
             media: "Lo destacado en Hot Tacos",
             footer: "Hot Tacos · Fiesta en cada mordisco",
+            continueTitle: "Continúa desde tu celular",
+            continueText:
+              "Escribe tu email y te enviaremos un enlace para continuar.",
+            emailPlaceholder: "Tu email",
+            sendLink: "Enviarme el enlace",
+            sendingLink: "Enviando...",
+            sentLink: "Enlace enviado. Revisa tu correo.",
+            continueHere: "Continuar aquí",
+            cancel: "Cancelar",
+            invalidEmail: "Escribe un email válido.",
+            sendError: "No pudimos enviar el enlace. Intenta de nuevo.",
             promos: [
               { kicker: "Hot Tacos Rewards", title: "Come. Acumula. Disfruta.", body: "Únete a Rewards y haz que cada visita cuente." },
               { kicker: "Gift Cards", title: "Regala un poco más de Hot Tacos.", body: "Compra una eGift Card o consulta el saldo de la que ya tienes." },
@@ -130,11 +163,16 @@ export default function EngageStation({ branchKey }: { branchKey: BranchKey }) {
       { id: "rewards", title: copy.rewards, subtitle: copy.rewardsSub, href: branch.rewardsSignupUrl, icon: <FaTrophy />, tone: "yellow" },
       { id: "feedback", title: copy.feedback, subtitle: copy.feedbackSub, href: `/customer-experience?branch=${branchKey}&source=engage`, icon: <FaCommentDots />, tone: "dark" },
       { id: "order", title: copy.order, subtitle: copy.orderSub, href: branch.orderUrl, icon: <FaUtensils />, tone: "red" },
-      { id: "catering", title: copy.catering, subtitle: copy.cateringSub, href: `/catering?branch=${branchKey}&source=engage`, icon: <FaUsers />, tone: "yellow" },
+      { id: "catering", title: copy.catering, subtitle: copy.cateringSub, href: `/catering?branch=${branchKey}&source=engage`, icon: <FaUsers />, tone: "yellow", emailHandoff: true },
       { id: "raffle", title: copy.raffle, subtitle: copy.raffleSub, href: `/raffle?branch=${branchKey}&source=engage`, icon: <FaTicketAlt />, tone: "dark" },
-      { id: "sponsorship", title: copy.sponsor, subtitle: copy.sponsorSub, href: `/opportunities?type=sponsorship&branch=${branchKey}&source=engage`, icon: <FaHandshake />, tone: "red" },
-      { id: "vendor", title: copy.vendor, subtitle: copy.vendorSub, href: `/opportunities?type=vendor&branch=${branchKey}&source=engage`, icon: <FaCalendarCheck />, tone: "yellow" },
-      { id: "advertising", title: copy.advertise, subtitle: copy.advertiseSub, href: `/opportunities?type=advertising&branch=${branchKey}&source=engage`, icon: <FaBullhorn />, tone: "dark" },
+      { id: "sponsorship", title: copy.sponsor, subtitle: copy.sponsorSub, href: `/opportunities?type=sponsorship&branch=${branchKey}&source=engage`, icon: <FaHandshake />, tone: "red", emailHandoff: true },
+      { id: "vendor", title: copy.vendor, subtitle: copy.vendorSub, href: `/opportunities?type=vendor&branch=${branchKey}&source=engage`, icon: <FaCalendarCheck />, tone: "yellow", emailHandoff: true },
+
+      // Advertising is intentionally hidden for now.
+      // Uncomment FaBullhorn, the copy fields and this action when ready.
+      // { id: "advertising", title: copy.advertise, subtitle: copy.advertiseSub, href: `/opportunities?type=advertising&branch=${branchKey}&source=engage`, icon: <FaBullhorn />, tone: "dark" },
+
+      { id: "food-truck", title: copy.foodTruck, subtitle: copy.foodTruckSub, href: `/food-truck?branch=${branchKey}&source=engage`, image: "/icons/HTFT.png", tone: "dark" },
     ],
     [branch, branchKey, copy]
   );
@@ -152,22 +190,20 @@ export default function EngageStation({ branchKey }: { branchKey: BranchKey }) {
         if (idleRef.current) clearTimeout(idleRef.current);
         setPromoIndex(0);
         setAttractMode(true);
+        setHandoffAction(null);
       }
     };
-
     document.addEventListener("visibilitychange", handleVisibility);
     return () => document.removeEventListener("visibilitychange", handleVisibility);
   }, []);
 
   useEffect(() => {
     if (attractMode) return;
-
     armIdleTimer();
     const reset = () => armIdleTimer();
     window.addEventListener("pointerdown", reset, { passive: true });
     window.addEventListener("touchstart", reset, { passive: true });
     window.addEventListener("keydown", reset);
-
     return () => {
       window.removeEventListener("pointerdown", reset);
       window.removeEventListener("touchstart", reset);
@@ -195,6 +231,56 @@ export default function EngageStation({ branchKey }: { branchKey: BranchKey }) {
     return styles.cardDark;
   };
 
+  function openHandoff(action: Action) {
+    setHandoffAction(action);
+    setHandoffEmail("");
+    setHandoffStatus("idle");
+    setHandoffError("");
+    armIdleTimer();
+  }
+
+  function closeHandoff() {
+    setHandoffAction(null);
+    setHandoffEmail("");
+    setHandoffStatus("idle");
+    setHandoffError("");
+  }
+
+  async function sendHandoffLink() {
+    if (!handoffAction) return;
+    const email = handoffEmail.trim();
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setHandoffError(copy.invalidEmail);
+      return;
+    }
+
+    try {
+      setHandoffStatus("loading");
+      setHandoffError("");
+
+      const response = await fetch("/api/email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "send-link",
+          email,
+          targetUrl: handoffAction.href,
+          label: handoffAction.title,
+          locale,
+        }),
+      });
+
+      if (!response.ok) throw new Error("Email handoff failed");
+
+      setHandoffStatus("success");
+    } catch (error) {
+      console.error(error);
+      setHandoffStatus("error");
+      setHandoffError(copy.sendError);
+    }
+  }
+
   if (attractMode) {
     return (
       <button
@@ -216,13 +302,11 @@ export default function EngageStation({ branchKey }: { branchKey: BranchKey }) {
               <span>{branch.shortName}</span>
             </span>
           </div>
-
           <div className={styles.attractCopy}>
             <span className={styles.attractEyebrow}>Hot Tacos Experience</span>
             <h1 className={styles.attractTitle}>{copy.attractTitle}</h1>
             <p className={styles.attractSubtitle}>{copy.attractSubtitle}</p>
           </div>
-
           <span className={styles.touch}>
             <span className={styles.touchIcon}><FaHandPointer /></span>
             {copy.touch}
@@ -293,7 +377,13 @@ export default function EngageStation({ branchKey }: { branchKey: BranchKey }) {
               const cardContent = (
                 <>
                   <span className={styles.cardTop}>
-                    <span className={styles.icon}>{action.icon}</span>
+                    <span className={`${styles.icon} ${action.image ? styles.imageIcon : ""}`}>
+                      {action.image ? (
+                        <img src={action.image} alt="" aria-hidden="true" className={styles.cardIconImage} />
+                      ) : (
+                        action.icon
+                      )}
+                    </span>
                     <span className={styles.arrow}><FaArrowRight /></span>
                   </span>
                   <span className={styles.cardCopy}>
@@ -309,6 +399,22 @@ export default function EngageStation({ branchKey }: { branchKey: BranchKey }) {
                   branch: branchKey,
                   locale,
                 });
+
+              if (action.emailHandoff) {
+                return (
+                  <button
+                    type="button"
+                    key={action.id}
+                    className={`${styles.card} ${toneClass(action.tone)}`}
+                    onClick={() => {
+                      trackAction();
+                      openHandoff(action);
+                    }}
+                  >
+                    {cardContent}
+                  </button>
+                );
+              }
 
               if (action.href.startsWith("/")) {
                 return (
@@ -344,6 +450,56 @@ export default function EngageStation({ branchKey }: { branchKey: BranchKey }) {
         <span>{copy.footer}</span>
         <span><strong>{branch.shortName}</strong> · {branch.address}</span>
       </footer>
+
+      {handoffAction ? (
+        <div className={styles.modalBackdrop} role="presentation" onClick={closeHandoff}>
+          <div
+            className={styles.handoffModal}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="handoff-title"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2 id="handoff-title">{copy.continueTitle}</h2>
+            <p>{copy.continueText}</p>
+
+            <input
+              type="email"
+              value={handoffEmail}
+              onChange={(e) => setHandoffEmail(e.target.value)}
+              placeholder={copy.emailPlaceholder}
+              className={styles.handoffInput}
+              autoComplete="email"
+            />
+
+            {handoffError ? <p className={styles.handoffError}>{handoffError}</p> : null}
+            {handoffStatus === "success" ? <p className={styles.handoffSuccess}>{copy.sentLink}</p> : null}
+
+            <div className={styles.handoffActions}>
+              <button
+                type="button"
+                className={styles.handoffPrimary}
+                onClick={sendHandoffLink}
+                disabled={handoffStatus === "loading"}
+              >
+                {handoffStatus === "loading" ? copy.sendingLink : copy.sendLink}
+              </button>
+
+              <Link
+                href={handoffAction.href}
+                className={styles.handoffSecondary}
+                onClick={closeHandoff}
+              >
+                {copy.continueHere}
+              </Link>
+
+              <button type="button" className={styles.handoffCancel} onClick={closeHandoff}>
+                {copy.cancel}
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }

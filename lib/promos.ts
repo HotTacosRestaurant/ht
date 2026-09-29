@@ -16,7 +16,7 @@ export type PromoCampaignPublic = {
 export type PromoClaimInput = {
   fullName: string;
   phone: string;
-  email: string;
+  email?: string;
   acceptedTerms: boolean;
   marketingConsent: boolean;
   locale: "en" | "es";

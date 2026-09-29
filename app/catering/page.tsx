@@ -33,8 +33,8 @@ export default function CateringPage() {
     description: "Tell us what you need and our team can follow up with a catering proposal.",
     fullName: "Contact name",
     organization: "Company / organization (optional)",
-    email: "Email",
-    phone: "Phone",
+    email: "Email (optional)",
+    phone: "Phone (optional)",
     eventDate: "Event date",
     guestCount: "Estimated guests",
     eventType: "Type of event",
@@ -43,14 +43,15 @@ export default function CateringPage() {
     sending: "Sending...",
     success: "Thanks. Your catering request was submitted.",
     error: "Could not submit your request. Please try again.",
+    required: "Name and at least one contact method (email or phone) are required.",
   } : {
     eyebrow: "Catering",
     title: "Planea tu evento con Hot Tacos",
     description: "Cuéntanos qué necesitas y nuestro equipo podrá dar seguimiento con una propuesta de catering.",
     fullName: "Nombre de contacto",
     organization: "Empresa / organización (opcional)",
-    email: "Email",
-    phone: "Teléfono",
+    email: "Email (opcional)",
+    phone: "Teléfono (opcional)",
     eventDate: "Fecha del evento",
     guestCount: "Invitados estimados",
     eventType: "Tipo de evento",
@@ -59,26 +60,45 @@ export default function CateringPage() {
     sending: "Enviando...",
     success: "Gracias. Tu solicitud de catering fue enviada.",
     error: "No se pudo enviar tu solicitud. Intenta de nuevo.",
+    required: "Nombre y al menos un medio de contacto (email o teléfono) son obligatorios.",
   }, [locale]);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError("");
-    if (!fullName.trim() || !email.trim() || !phone.trim()) {
-      setError(locale === "en" ? "Name, email and phone are required." : "Nombre, email y teléfono son obligatorios.");
+
+    if (!fullName.trim() || (!email.trim() && !phone.trim())) {
+      setError(labels.required);
       return;
     }
 
     try {
       setStatus("loading");
       const params = new URLSearchParams(window.location.search);
+
       await createCateringLead({
-        branchKey, fullName, organization, email, phone, eventDate, guestCount,
-        eventType, message, locale, source: params.get("source") || "website",
+        branchKey,
+        fullName,
+        organization,
+        email,
+        phone,
+        eventDate,
+        guestCount,
+        eventType,
+        message,
+        locale,
+        source: params.get("source") || "website",
       });
+
       setStatus("success");
-      setFullName(""); setOrganization(""); setEmail(""); setPhone("");
-      setEventDate(""); setGuestCount(""); setEventType(""); setMessage("");
+      setFullName("");
+      setOrganization("");
+      setEmail("");
+      setPhone("");
+      setEventDate("");
+      setGuestCount("");
+      setEventType("");
+      setMessage("");
     } catch (err) {
       console.error(err);
       setStatus("error");

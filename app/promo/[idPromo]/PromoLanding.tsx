@@ -34,7 +34,7 @@ export default function PromoLanding({ idPromo }: Props) {
             invalidBody: "The campaign code is invalid, inactive, or has expired.",
             fullName: "Full name",
             phone: "Mobile phone",
-            email: "Email",
+            email: "Email (optional)",
             terms: "I accept the promotion terms and conditions.",
             marketing:
               "Yes, I want to receive Hot Tacos promotions and offers by email or text. I can unsubscribe at any time.",
@@ -57,7 +57,7 @@ export default function PromoLanding({ idPromo }: Props) {
             invalidBody: "El código de campaña es inválido, está inactivo o ya venció.",
             fullName: "Nombre completo",
             phone: "Teléfono móvil",
-            email: "Email",
+            email: "Email (opcional)",
             terms: "Acepto los términos y condiciones de la promoción.",
             marketing:
               "Sí, quiero recibir promociones y ofertas de Hot Tacos por email o SMS. Puedo darme de baja en cualquier momento.",
@@ -114,7 +114,7 @@ export default function PromoLanding({ idPromo }: Props) {
     event.preventDefault();
     setErrorMessage("");
 
-    if (!fullName.trim() || !phone.trim() || !email.trim() || !acceptedTerms) {
+    if (!fullName.trim() || !phone.trim() || !acceptedTerms) {
       setErrorMessage(labels.required);
       return;
     }

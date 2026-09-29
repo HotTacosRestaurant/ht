@@ -29,6 +29,7 @@ export default function OpportunitiesPage() {
     const params = new URLSearchParams(window.location.search);
     const t = params.get("type");
     const b = params.get("branch");
+
     if (t === "sponsorship" || t === "vendor" || t === "advertising") setType(t);
     if (b === "leamington" || b === "windsor") setBranchKey(b);
   }, []);
@@ -42,7 +43,7 @@ export default function OpportunitiesPage() {
     advertising: "Advertise with Hot Tacos",
     organization: "Organization / business",
     contactName: "Contact name",
-    email: "Email",
+    email: "Email (optional)",
     phone: "Phone (optional)",
     eventDate: "Event date (if applicable)",
     attendance: "Expected attendance / audience (optional)",
@@ -51,6 +52,7 @@ export default function OpportunitiesPage() {
     sending: "Sending...",
     success: "Thanks. Your request was submitted for review.",
     error: "Could not submit your request. Please try again.",
+    required: "Organization, contact name, description, and at least one contact method are required.",
   } : {
     eyebrow: "Colabora con Hot Tacos",
     title: "Cuéntanos sobre la oportunidad",
@@ -60,7 +62,7 @@ export default function OpportunitiesPage() {
     advertising: "Anunciarte con Hot Tacos",
     organization: "Organización / negocio",
     contactName: "Nombre de contacto",
-    email: "Email",
+    email: "Email (opcional)",
     phone: "Teléfono (opcional)",
     eventDate: "Fecha del evento (si aplica)",
     attendance: "Asistencia / audiencia estimada (opcional)",
@@ -69,25 +71,49 @@ export default function OpportunitiesPage() {
     sending: "Enviando...",
     success: "Gracias. Tu solicitud fue enviada para revisión.",
     error: "No se pudo enviar la solicitud. Intenta de nuevo.",
+    required: "Organización, contacto, descripción y al menos un medio de contacto son obligatorios.",
   }, [locale]);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError("");
-    if (!organization.trim() || !contactName.trim() || !email.trim() || !message.trim()) {
-      setError(locale === "en" ? "Organization, contact, email and description are required." : "Organización, contacto, email y descripción son obligatorios.");
+
+    if (
+      !organization.trim() ||
+      !contactName.trim() ||
+      !message.trim() ||
+      (!email.trim() && !phone.trim())
+    ) {
+      setError(labels.required);
       return;
     }
+
     try {
       setStatus("loading");
       const params = new URLSearchParams(window.location.search);
+
       await createBusinessOpportunity({
-        type, branchKey, organization, contactName, email, phone, eventDate,
-        expectedAttendance, message, locale, source: params.get("source") || "website",
+        type,
+        branchKey,
+        organization,
+        contactName,
+        email,
+        phone,
+        eventDate,
+        expectedAttendance,
+        message,
+        locale,
+        source: params.get("source") || "website",
       });
+
       setStatus("success");
-      setOrganization(""); setContactName(""); setEmail(""); setPhone("");
-      setEventDate(""); setExpectedAttendance(""); setMessage("");
+      setOrganization("");
+      setContactName("");
+      setEmail("");
+      setPhone("");
+      setEventDate("");
+      setExpectedAttendance("");
+      setMessage("");
     } catch (err) {
       console.error(err);
       setStatus("error");
@@ -112,21 +138,29 @@ export default function OpportunitiesPage() {
                 <option value="windsor">Windsor</option>
               </select>
             </div>
+
             <div className="grid gap-4 md:grid-cols-2">
               <input type="text" placeholder={labels.organization} value={organization} onChange={(e) => setOrganization(e.target.value)} className="rounded-xl border border-black/10 px-4 py-3 outline-none" />
               <input type="text" placeholder={labels.contactName} value={contactName} onChange={(e) => setContactName(e.target.value)} className="rounded-xl border border-black/10 px-4 py-3 outline-none" />
             </div>
+
             <div className="grid gap-4 md:grid-cols-2">
               <input type="email" placeholder={labels.email} value={email} onChange={(e) => setEmail(e.target.value)} className="rounded-xl border border-black/10 px-4 py-3 outline-none" />
               <input type="tel" placeholder={labels.phone} value={phone} onChange={(e) => setPhone(e.target.value)} className="rounded-xl border border-black/10 px-4 py-3 outline-none" />
             </div>
+
             <div className="grid gap-4 md:grid-cols-2">
               <label className="grid gap-2 text-sm font-semibold">{labels.eventDate}<input type="date" value={eventDate} onChange={(e) => setEventDate(e.target.value)} className="rounded-xl border border-black/10 px-4 py-3 font-normal outline-none" /></label>
               <input type="number" min="1" placeholder={labels.attendance} value={expectedAttendance} onChange={(e) => setExpectedAttendance(e.target.value)} className="rounded-xl border border-black/10 px-4 py-3 outline-none" />
             </div>
+
             <textarea rows={6} placeholder={labels.message} value={message} onChange={(e) => setMessage(e.target.value)} className="rounded-xl border border-black/10 px-4 py-3 outline-none" />
-            <button type="submit" disabled={status === "loading"} className="ht-btn ht-btn-primary">{status === "loading" ? labels.sending : labels.submit}</button>
+
+            <button type="submit" disabled={status === "loading"} className="ht-btn ht-btn-primary">
+              {status === "loading" ? labels.sending : labels.submit}
+            </button>
           </form>
+
           {status === "success" ? <p className="mt-4 text-sm text-green-700">{labels.success}</p> : null}
           {error ? <p className="mt-4 text-sm text-red-700">{error}</p> : null}
         </div>

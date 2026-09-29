@@ -97,24 +97,25 @@ export async function claimPromoCampaign(
   const phone = normalizePhone(safeText(input.phone, 40));
   const email = normalizeEmail(safeText(input.email, 160));
 
-  if (!campaignId || !fullName || !phone || !email || input.acceptedTerms !== true) {
+  if (!campaignId || !fullName || !phone || input.acceptedTerms !== true) {
     throw new Error("invalid_fields");
   }
 
-  // Phone is the primary identity key because Toast's single-use flow also
-  // identifies the guest by phone. Email is retained as a secondary duplicate check.
-  const [phoneHash, emailHash] = await Promise.all([sha256(phone), sha256(email)]);
+  // Phone is always the primary identity key. If the guest provides an email,
+  // keep using it as an additional duplicate check without requiring it.
+  const phoneHash = await sha256(phone);
+  const emailHash = email ? await sha256(email) : null;
 
   const campaignRef = doc(db, FS_PATHS.promoCampaigns, campaignId);
   const phoneKeyRef = doc(db, FS_PATHS.promoClaimKeys, `${campaignId}_phone_${phoneHash}`);
-  const emailKeyRef = doc(db, FS_PATHS.promoClaimKeys, `${campaignId}_email_${emailHash}`);
+  const emailKeyRef = emailHash
+    ? doc(db, FS_PATHS.promoClaimKeys, `${campaignId}_email_${emailHash}`)
+    : null;
 
   return runTransaction(db, async (tx) => {
-    const [campaignSnap, phoneKeySnap, emailKeySnap] = await Promise.all([
-      tx.get(campaignRef),
-      tx.get(phoneKeyRef),
-      tx.get(emailKeyRef),
-    ]);
+    const campaignSnap = await tx.get(campaignRef);
+    const phoneKeySnap = await tx.get(phoneKeyRef);
+    const emailKeySnap = emailKeyRef ? await tx.get(emailKeyRef) : null;
 
     if (!campaignSnap.exists()) throw new Error("campaign_not_found");
 
@@ -126,7 +127,7 @@ export async function claimPromoCampaign(
 
     if (!toastPromoCode) throw new Error("campaign_misconfigured");
 
-    if (phoneKeySnap.exists() || emailKeySnap.exists()) {
+    if (phoneKeySnap.exists() || emailKeySnap?.exists()) {
       return {
         status: "already_claimed" as const,
         toastPromoCode,
@@ -141,7 +142,7 @@ export async function claimPromoCampaign(
       campaignId,
       fullName,
       phone,
-      email,
+      email: email || null,
       acceptedTerms: true,
       acceptedTermsAt: serverTimestamp(),
       marketingConsent: input.marketingConsent === true,
@@ -167,7 +168,7 @@ export async function claimPromoCampaign(
     };
 
     tx.set(phoneKeyRef, keyPayload);
-    tx.set(emailKeyRef, keyPayload);
+    if (emailKeyRef) tx.set(emailKeyRef, keyPayload);
 
     return {
       status: "created" as const,
