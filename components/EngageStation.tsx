@@ -172,7 +172,7 @@ export default function EngageStation({ branchKey }: { branchKey: BranchKey }) {
       // Uncomment FaBullhorn, the copy fields and this action when ready.
       // { id: "advertising", title: copy.advertise, subtitle: copy.advertiseSub, href: `/opportunities?type=advertising&branch=${branchKey}&source=engage`, icon: <FaBullhorn />, tone: "dark" },
 
-      { id: "food-truck", title: copy.foodTruck, subtitle: copy.foodTruckSub, href: `/food-truck?branch=${branchKey}&source=engage`, image: "/icons/HTFT.png", tone: "dark" },
+      { id: "food-truck", title: copy.foodTruck, subtitle: copy.foodTruckSub, href: `/food-truck?branch=${branchKey}&source=engage`, image: "/screenshots/HTFT Image.jpeg", tone: "dark" },
     ],
     [branch, branchKey, copy]
   );

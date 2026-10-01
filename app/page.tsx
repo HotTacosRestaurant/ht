@@ -1,6 +1,7 @@
 "use client";
 
 import Hero from "@/components/Hero";
+import FoodTruckPromo from "@/components/FoodTruckPromo";
 import QuickActions from "@/components/QuickActions";
 import SectionTitle from "@/components/SectionTitle";
 import LocationCard from "@/components/LocationCard";
@@ -122,6 +123,7 @@ export default function HomePage() {
         </div>
       </section>
 
+      <FoodTruckPromo source="home" />
       <div className="ht-sticky-spacer" />
     </>
   );

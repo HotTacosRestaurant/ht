@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import SectionTitle from "@/components/SectionTitle";
+import FoodTruckImage from "@/components/FoodTruckImage";
 import { useLanguage } from "@/components/LanguageProvider";
 import {
   createBusinessOpportunity,
@@ -142,7 +143,7 @@ export default function FoodTruckPage() {
         <div className="mb-8 grid items-center gap-8 lg:grid-cols-[1.1fr_0.9fr]">
           <SectionTitle eyebrow={labels.eyebrow} title={labels.title} description={labels.description} />
           <div className="overflow-hidden rounded-3xl border border-black/10 bg-white shadow-sm">
-            <img src="/icons/HTFT.png" alt="Hot Tacos Food Truck" className="aspect-square w-full object-cover" />
+            <FoodTruckImage className="aspect-square w-full object-cover" />
           </div>
         </div>
 

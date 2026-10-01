@@ -1,6 +1,8 @@
 "use client";
 
 import SectionTitle from "@/components/SectionTitle";
+import BranchCertifications from "@/components/BranchCertifications";
+import FoodTruckPromo from "@/components/FoodTruckPromo";
 import { BRANCHES, FEATURED_ITEMS, SOCIALS } from "@/lib/site-data";
 import { useLanguage } from "@/components/LanguageProvider";
 
@@ -204,7 +206,9 @@ export default function LeamingtonPage() {
             ))}
           </div>
         </div>
+        <BranchCertifications branch="leamington" />
       </div>
+      <FoodTruckPromo branch="leamington" source="location" />
     </section>
   );
 }
