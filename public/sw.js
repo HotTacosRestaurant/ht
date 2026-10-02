@@ -1,4 +1,4 @@
-const CACHE_NAME = "ht-static-v4";
+const CACHE_NAME = "ht-static-v5";
 const STATIC_ASSETS = [
   "/manifest.webmanifest",
   "/favicon.ico",
@@ -48,8 +48,12 @@ self.addEventListener("fetch", (event) => {
       return fetch(request).then((response) => {
         if (response.ok) {
           const clone = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
+
+          event.waitUntil(
+            caches.open(CACHE_NAME).then((cache) => cache.put(request, clone))
+          );
         }
+
         return response;
       });
     })

@@ -41,8 +41,9 @@ export default function PwaRegister() {
 
     void navigator.serviceWorker
       .register("/sw.js", { updateViaCache: "none" })
-      .then((registration) => registration.update())
-      .catch((error) => console.error("SW registration failed:", error));
+      .catch((error) => {
+        console.error("SW registration failed:", error);
+      });
   }, []);
 
   return null;
