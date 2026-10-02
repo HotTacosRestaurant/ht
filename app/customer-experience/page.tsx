@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
+import { useQueryInitialState } from "@/lib/use-query-initial-state";
 import SectionTitle from "@/components/SectionTitle";
 import {
   createCustomerExperienceEntry,
@@ -15,7 +16,7 @@ type VisitType = "dine_in" | "takeout" | "delivery" | "other";
 export default function CustomerExperiencePage() {
   const { locale } = useLanguage();
 
-  const [branchKey, setBranchKey] = useState<ExperienceBranchKey>("leamington");
+  const [branchKey, setBranchKey] = useQueryInitialState<ExperienceBranchKey>("branch", "leamington", ["leamington", "windsor"]);
   const [visitType, setVisitType] = useState<VisitType>("dine_in");
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
@@ -23,15 +24,6 @@ export default function CustomerExperiencePage() {
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState<SubmitStatus>("idle");
   const [errorMessage, setErrorMessage] = useState("");
-
-
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const branch = params.get("branch");
-    if (branch === "leamington" || branch === "windsor") {
-      setBranchKey(branch as ExperienceBranchKey);
-    }
-  }, []);
 
   const labels = useMemo(() => {
     if (locale === "en") {

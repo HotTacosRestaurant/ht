@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
+import { useQueryInitialState } from "@/lib/use-query-initial-state";
 import SectionTitle from "@/components/SectionTitle";
 import { useLanguage } from "@/components/LanguageProvider";
 import {
@@ -13,8 +14,8 @@ type SubmitStatus = "idle" | "loading" | "success" | "error";
 
 export default function OpportunitiesPage() {
   const { locale } = useLanguage();
-  const [type, setType] = useState<OpportunityType>("sponsorship");
-  const [branchKey, setBranchKey] = useState<OpportunityBranchKey>("leamington");
+  const [type, setType] = useQueryInitialState<OpportunityType>("type", "sponsorship", ["sponsorship", "vendor", "advertising"]);
+  const [branchKey, setBranchKey] = useQueryInitialState<OpportunityBranchKey>("branch", "leamington", ["leamington", "windsor"]);
   const [organization, setOrganization] = useState("");
   const [contactName, setContactName] = useState("");
   const [email, setEmail] = useState("");
@@ -24,15 +25,6 @@ export default function OpportunitiesPage() {
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState<SubmitStatus>("idle");
   const [error, setError] = useState("");
-
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const t = params.get("type");
-    const b = params.get("branch");
-
-    if (t === "sponsorship" || t === "vendor" || t === "advertising") setType(t);
-    if (b === "leamington" || b === "windsor") setBranchKey(b);
-  }, []);
 
   const labels = useMemo(() => locale === "en" ? {
     eyebrow: "Work with Hot Tacos",

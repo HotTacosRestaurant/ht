@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
+import { useQueryInitialState } from "@/lib/use-query-initial-state";
 import SectionTitle from "@/components/SectionTitle";
 import FoodTruckImage from "@/components/FoodTruckImage";
 import { useLanguage } from "@/components/LanguageProvider";
@@ -13,7 +14,7 @@ type SubmitStatus = "idle" | "loading" | "success" | "error";
 
 export default function FoodTruckPage() {
   const { locale } = useLanguage();
-  const [branchKey, setBranchKey] = useState<OpportunityBranchKey>("leamington");
+  const [branchKey, setBranchKey] = useQueryInitialState<OpportunityBranchKey>("branch", "leamington", ["leamington", "windsor"]);
   const [contactName, setContactName] = useState("");
   const [organization, setOrganization] = useState("");
   const [email, setEmail] = useState("");
@@ -25,12 +26,6 @@ export default function FoodTruckPage() {
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState<SubmitStatus>("idle");
   const [error, setError] = useState("");
-
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const branch = params.get("branch");
-    if (branch === "leamington" || branch === "windsor") setBranchKey(branch);
-  }, []);
 
   const labels = useMemo(() => locale === "en" ? {
     eyebrow: "Hot Tacos Food Truck",

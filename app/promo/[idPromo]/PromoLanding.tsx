@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { useLanguage } from "@/components/LanguageProvider";
 import { trackEvent } from "@/lib/analytics";
@@ -188,9 +189,9 @@ export default function PromoLanding({ idPromo }: Props) {
             <div className="text-5xl">🌮</div>
             <h1 className="mt-4 text-3xl font-black">{labels.invalidTitle}</h1>
             <p className="mt-3 text-neutral-600">{labels.invalidBody}</p>
-            <a href="/promo" className="ht-btn ht-btn-primary mt-6">
+            <Link href="/promo" className="ht-btn ht-btn-primary mt-6">
               {locale === "en" ? "Enter another code" : "Ingresar otro código"}
-            </a>
+            </Link>
           </div>
         </div>
       </section>

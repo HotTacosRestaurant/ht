@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
+import { useQueryInitialState } from "@/lib/use-query-initial-state";
 import SectionTitle from "@/components/SectionTitle";
 import { createRaffleEntry, type RaffleBranchKey } from "@/lib/raffles";
 import { trackRaffleSubmit } from "@/lib/analytics";
@@ -11,7 +12,7 @@ type SubmitStatus = "idle" | "loading" | "success" | "error";
 export default function RafflePage() {
   const { locale } = useLanguage();
 
-  const [branchKey, setBranchKey] = useState<RaffleBranchKey>("leamington");
+  const [branchKey, setBranchKey] = useQueryInitialState<RaffleBranchKey>("branch", "leamington", ["leamington", "windsor"]);
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
@@ -19,15 +20,6 @@ export default function RafflePage() {
   const [marketingConsent, setMarketingConsent] = useState(false);
   const [status, setStatus] = useState<SubmitStatus>("idle");
   const [errorMessage, setErrorMessage] = useState("");
-
-
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const branch = params.get("branch");
-    if (branch === "leamington" || branch === "windsor") {
-      setBranchKey(branch as RaffleBranchKey);
-    }
-  }, []);
 
   const labels = useMemo(() => {
     if (locale === "en") {

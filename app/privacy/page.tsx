@@ -1,15 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useLanguage } from "@/components/LanguageProvider";
 
 export default function PrivacyPage() {
-  const [locale, setLocale] = useState<"es" | "en">("es");
-
-  // 🔥 Detecta idioma desde <html lang="">
-  useEffect(() => {
-    const lang = document.documentElement.lang;
-    if (lang === "en") setLocale("en");
-  }, []);
+  const { locale } = useLanguage();
 
   return (
     <main className="max-w-3xl mx-auto px-4 py-12">
