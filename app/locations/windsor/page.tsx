@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import SectionTitle from "@/components/SectionTitle";
 import BranchCertifications from "@/components/BranchCertifications";
 import FoodTruckPromo from "@/components/FoodTruckPromo";
@@ -21,11 +22,14 @@ export default function WindsorPage() {
 
         <div className="ht-grid-2">
           <div className="ht-card overflow-hidden">
-            <div className="aspect-16/10">
-              <img
+            <div className="relative aspect-16/10">
+              <Image
                 src={branch.imageUrl}
                 alt={branch.name}
-                className="h-full w-full object-cover"
+                fill
+                sizes="(min-width: 768px) 50vw, 100vw"
+                priority
+                className="object-cover"
               />
             </div>
           </div>
