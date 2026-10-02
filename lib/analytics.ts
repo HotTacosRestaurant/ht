@@ -11,6 +11,12 @@ type TrackParams = Record<
   string | number | boolean | null | undefined
 >;
 
+type CleanParams = Record<string, string | number | boolean>;
+
+type AnalyticsCall = {
+  args: unknown[];
+};
+
 declare global {
   interface Window {
     dataLayer?: Array<Record<string, unknown>>;
@@ -19,8 +25,13 @@ declare global {
   }
 }
 
-function cleanParams(params?: TrackParams): Record<string, string | number | boolean> {
-  const cleaned: Record<string, string | number | boolean> = {};
+const MAX_PENDING_CALLS = 100;
+
+const pendingGA: AnalyticsCall[] = [];
+const pendingMeta: AnalyticsCall[] = [];
+
+function cleanParams(params?: TrackParams): CleanParams {
+  const cleaned: CleanParams = {};
 
   if (!params) return cleaned;
 
@@ -35,6 +46,56 @@ function cleanParams(params?: TrackParams): Record<string, string | number | boo
   }
 
   return cleaned;
+}
+
+function queueCall(queue: AnalyticsCall[], args: unknown[]) {
+  if (queue.length >= MAX_PENDING_CALLS) {
+    queue.shift();
+  }
+
+  queue.push({ args });
+}
+
+function sendGA(...args: unknown[]) {
+  if (typeof window === "undefined" || !GA_ID) return;
+
+  if (typeof window.gtag !== "function") {
+    queueCall(pendingGA, args);
+    return;
+  }
+
+  flushPendingAnalytics();
+  window.gtag(...args);
+}
+
+function sendMeta(...args: unknown[]) {
+  if (typeof window === "undefined" || !META_PIXEL_ID) return;
+
+  if (typeof window.fbq !== "function") {
+    queueCall(pendingMeta, args);
+    return;
+  }
+
+  flushPendingAnalytics();
+  window.fbq(...args);
+}
+
+export function flushPendingAnalytics() {
+  if (typeof window === "undefined") return;
+
+  if (typeof window.gtag === "function") {
+    while (pendingGA.length > 0) {
+      const call = pendingGA.shift();
+      if (call) window.gtag(...call.args);
+    }
+  }
+
+  if (typeof window.fbq === "function") {
+    while (pendingMeta.length > 0) {
+      const call = pendingMeta.shift();
+      if (call) window.fbq(...call.args);
+    }
+  }
 }
 
 function pushDataLayer(eventName: string, params?: TrackParams) {
@@ -53,8 +114,8 @@ export function trackPageView(url: string) {
   const page_location = `${window.location.origin}${url}`;
   const debug_mode = process.env.NODE_ENV !== "production";
 
-  if (GA_ID && window.gtag) {
-    window.gtag("config", GA_ID, {
+  if (GA_ID) {
+    sendGA("config", GA_ID, {
       page_path: url,
       page_location,
       page_title: document.title,
@@ -62,8 +123,8 @@ export function trackPageView(url: string) {
     });
   }
 
-  if (META_PIXEL_ID && window.fbq) {
-    window.fbq("track", "PageView");
+  if (META_PIXEL_ID) {
+    sendMeta("track", "PageView");
   }
 
   pushDataLayer("page_view", {
@@ -78,60 +139,48 @@ export function trackEvent(eventName: string, params?: TrackParams) {
   const cleaned = cleanParams(params);
   const debug_mode = process.env.NODE_ENV !== "production";
 
-  if (GA_ID && window.gtag) {
-    window.gtag("event", eventName, {
+  if (GA_ID) {
+    sendGA("event", eventName, {
       ...cleaned,
       debug_mode,
     });
   }
 
-  if (META_PIXEL_ID && window.fbq) {
-    window.fbq("trackCustom", eventName, cleaned);
+  if (META_PIXEL_ID) {
+    sendMeta("trackCustom", eventName, cleaned);
   }
 
   pushDataLayer(eventName, cleaned);
 }
 
 export function trackOrderClick(branch?: string, source?: string) {
-  trackEvent("order_click", {
+  const params = {
     branch: branch || "unknown",
     cta_location: source || "unknown",
-  });
+  };
 
-  if (typeof window !== "undefined" && window.fbq) {
-    window.fbq("trackCustom", "OrderClick", {
-      branch: branch || "unknown",
-      cta_location: source || "unknown",
-    });
-  }
+  trackEvent("order_click", params);
+  sendMeta("trackCustom", "OrderClick", params);
 }
 
 export function trackCallClick(branch?: string, source?: string) {
-  trackEvent("call_click", {
+  const params = {
     branch: branch || "unknown",
     cta_location: source || "unknown",
-  });
+  };
 
-  if (typeof window !== "undefined" && window.fbq) {
-    window.fbq("trackCustom", "CallClick", {
-      branch: branch || "unknown",
-      cta_location: source || "unknown",
-    });
-  }
+  trackEvent("call_click", params);
+  sendMeta("trackCustom", "CallClick", params);
 }
 
 export function trackDirectionsClick(branch?: string, source?: string) {
-  trackEvent("directions_click", {
+  const params = {
     branch: branch || "unknown",
     cta_location: source || "unknown",
-  });
+  };
 
-  if (typeof window !== "undefined" && window.fbq) {
-    window.fbq("trackCustom", "DirectionsClick", {
-      branch: branch || "unknown",
-      cta_location: source || "unknown",
-    });
-  }
+  trackEvent("directions_click", params);
+  sendMeta("trackCustom", "DirectionsClick", params);
 }
 
 export function trackRaffleSubmit(branch?: string, locale?: string) {
@@ -141,15 +190,17 @@ export function trackRaffleSubmit(branch?: string, locale?: string) {
     form_name: "raffle",
   });
 
-  if (typeof window !== "undefined" && window.fbq) {
-    window.fbq("track", "Lead", {
-      branch: branch || "unknown",
-      locale: locale || "unknown",
-    });
-  }
+  sendMeta("track", "Lead", {
+    branch: branch || "unknown",
+    locale: locale || "unknown",
+  });
 }
 
-export function trackReviewSubmit(branch?: string, rating?: number, locale?: string) {
+export function trackReviewSubmit(
+  branch?: string,
+  rating?: number,
+  locale?: string
+) {
   trackEvent("review_submit", {
     branch: branch || "unknown",
     rating: rating || 0,

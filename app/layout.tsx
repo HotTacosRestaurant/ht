@@ -27,8 +27,6 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
 };
 
 export default function RootLayout({
@@ -59,6 +57,7 @@ export default function RootLayout({
                 gtag('config', '${GA_ID}', {
                   send_page_view: false
                 });
+                window.dispatchEvent(new Event('ht:analytics-ready'));
               `}
             </Script>
           </>
@@ -77,6 +76,7 @@ export default function RootLayout({
                 s.parentNode.insertBefore(t,s)}(window, document,'script',
                 'https://connect.facebook.net/en_US/fbevents.js');
                 fbq('init', '${META_PIXEL_ID}');
+                window.dispatchEvent(new Event('ht:analytics-ready'));
               `}
             </Script>
             <noscript>
