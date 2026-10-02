@@ -28,15 +28,20 @@ export default function WindsorPage() {
                 alt={branch.name}
                 fill
                 sizes="(min-width: 768px) 50vw, 100vw"
-                priority
+                fetchPriority="high"
+                loading="eager"
                 className="object-cover"
               />
             </div>
           </div>
 
           <div className="ht-card p-6">
-            <h2 className="text-2xl font-black">{branch.address}</h2>
-            <p className="mt-2 text-neutral-700">{branch.phoneDisplay}</p>
+            <h2 className="text-2xl font-black">
+              {branch.address}
+            </h2>
+            <p className="mt-2 text-neutral-700">
+              {branch.phoneDisplay}
+            </p>
 
             <div className="mt-5 grid grid-cols-2 gap-3">
               <a
@@ -55,10 +60,16 @@ export default function WindsorPage() {
               >
                 {messages.branchPage.directions}
               </a>
-              <a href={branch.phoneHref} className="ht-btn border border-black/10">
+              <a
+                href={branch.phoneHref}
+                className="ht-btn border border-black/10"
+              >
                 {messages.branchPage.call}
               </a>
-              <a href="/menu" className="ht-btn border border-black/10">
+              <a
+                href="/menu"
+                className="ht-btn border border-black/10"
+              >
                 {messages.branchPage.viewMenu}
               </a>
             </div>
@@ -99,8 +110,10 @@ export default function WindsorPage() {
             ))}
           </div>
         </div>
+
         <BranchCertifications branch="windsor" />
       </div>
+
       <FoodTruckPromo branch="windsor" source="location" />
     </section>
   );
